@@ -137,3 +137,18 @@ def test_hibrido_classification():
     result = resolve_marketing_profile(brief_data)
     assert result["marketing_profile"] == "hibrido_producto_servicio"
     assert "adquirir con soporte" in result["terminology"]["accion_principal"]
+
+def test_resolve_artesania_sonica_ecommerce():
+    """
+    Fase 4: Caso real de Ecommerce D2C de artesanía premium.
+    Debe clasificar como ecommerce_transaccional.
+    """
+    brief_data = {
+        "tipo_negocio": "Ecommerce D2C (Direct to Consumer)",
+        "oferta_principal": "Auriculares premium de madera hechos a mano con tecnología de alta fidelidad.",
+        "cliente_objetivo": "Audiófilos, amantes del diseño natural y profesionales del sonido que buscan exclusividad y calidez sonora.",
+        "problema_que_resuelve": "La frialdad estética y falta de personalidad de los dispositivos electrónicos producidos en masa."
+    }
+    result = resolve_marketing_profile(brief_data)
+    # Se espera ecommerce_transaccional por ser venta directa de producto físico D2C
+    assert result["marketing_profile"] == "ecommerce_transaccional"

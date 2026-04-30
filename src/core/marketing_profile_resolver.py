@@ -10,11 +10,14 @@
 PROFILE_KEYWORDS = {
     "ecommerce_transaccional": [
         "ecommerce", "tienda online", "tienda virtual", "shopify", "woocomerce",
-        "ventas online", "envíos", "envios", "envío a domicilio", "producto físico",
+        "ventas online", "venta online", "compra online", "tienda propia",
+        "envíos", "envios", "envío a domicilio", "producto físico",
         "producto fisico", "ticket medio", "roas", "conversión", "carrito",
         "checkout", "pasarela de pago", "embudo de ventas", "funnel",
         "ventas web", "stock", "inventario", "pedidos", "calzado", "zapatillas",
         "ropa", "moda", "electrónica", "tecnología de consumo",
+        "d2c", "direct to consumer", "direct-to-consumer",
+        "producto artesanal", "hecho a mano", "exclusividad",
     ],
     "hibrido_producto_servicio": [
         "mantenimiento", "servicio técnico", "servicio tecnico", "reparación",
