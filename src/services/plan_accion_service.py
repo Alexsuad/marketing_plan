@@ -29,16 +29,21 @@ def generate_plan_accion_output(project_name: str) -> str:
     )
 
     # 2. Recopilar información
-
     brief_path = os.path.join(context_dir, "brief_negocio.md")
     brief_data = extract_brief_fields(read_markdown_file(brief_path)) if os.path.exists(brief_path) else {}
     profile = resolve_marketing_profile(brief_data)
 
-    servicio_principal = brief_data.get("servicio_principal", "[No informado]")
+    oferta_principal = brief_data.get("oferta_principal", "[No informado]")
     cliente_objetivo = brief_data.get("cliente_objetivo", "[No informado]")
     objetivo_principal = brief_data.get("objetivo_principal", "[No informado]")
     problema_principal = brief_data.get("problema_que_resuelve", "[No informado]")
     presupuesto = brief_data.get("presupuesto_marketing", "No informado")
+
+    # 3. Extraer terminología
+    terminology = profile.get("terminology", {})
+    tipo_oferta = terminology.get("oferta", "oferta")
+    tipo_cliente = terminology.get("cliente", "cliente")
+    accion_vincular = terminology.get("accion_principal", "contratar")
 
     found_files = [
         "01_brief_negocio_validado.md", "02_diagnostico_marketing.md",
@@ -49,12 +54,12 @@ def generate_plan_accion_output(project_name: str) -> str:
     if os.path.exists(os.path.join(context_dir, "restricciones.md")):
         found_files.append("restricciones.md")
 
-    # 3. Construir tácticas según perfil
+    # 4. Construir tácticas según perfil
     tactical_block = ""
     for tactic in profile["tactical_focus"]:
         tactical_block += f"- {tactic}\n"
 
-    # 4. Construir acciones por canal según perfil
+    # 5. Construir acciones por canal según perfil
     actions_block = ""
     for channel in profile["recommended_channel_families"]:
         actions_block += f"""- **Canal: {channel['name']}**
@@ -95,9 +100,9 @@ Esta fase ordena las acciones de marketing necesarias para los próximos 90 día
 - **Capacidad operativa**: Se asume capacidad para gestionar al menos un canal prioritario de forma constante.
 
 ## Prioridades estratégicas de los 90 días
-1. **Consolidar la base estratégica**: Asegurar que los mensajes de '{servicio_principal}' resuenan con el problema '{problema_principal}'.
+1. **Consolidar la base estratégica**: Asegurar que los mensajes de la {tipo_oferta} '{oferta_principal}' resuenan con el problema '{problema_principal}'.
 2. **Activación de visibilidad controlada**: Iniciar presencia en los canales prioritarios para recoger señales de interés.
-3. **Validación cualitativa**: Documentar objeciones y dudas reales de los clientes potenciales para ajustar la oferta.
+3. **Validación cualitativa**: Documentar objeciones y dudas reales de los {tipo_cliente}s potenciales para ajustar la oferta.
 4. **Preparación de activos mínimos**: Crear las piezas básicas necesarias para operar en los canales seleccionados.
 
 ## Tácticas prioritarias según perfil ({profile['marketing_profile']})
@@ -115,12 +120,12 @@ Esta fase ordena las acciones de marketing necesarias para los próximos 90 día
 - **Activación del canal prioritario #1**: Iniciar las primeras acciones en el canal principal de la Fase 06.
 - **Presencia básica**: Asegurar visibilidad mínima en los canales secundarios de apoyo.
 - **Prueba de Mensajes**: Utilizar los mensajes de la Fase 07 en interacciones reales y documentar el nivel de respuesta.
-- **Recogida de señales**: Registrar qué beneficios de '{servicio_principal}' generan más interés y cuáles son ignorados.
+- **Recogida de señales**: Registrar qué beneficios de la {tipo_oferta} generan más interés y cuáles son ignorados.
 - **Gestión de objeciones**: Aplicar las respuestas diseñadas en la Fase 07 y anotar nuevas objeciones no previstas.
 
 ### Días 61 a 90 - Ajuste y consolidación
 - **Análisis de señales**: Evaluar qué canal de la Fase 06 ha mostrado mayor potencial de conversión.
-- **Refinamiento de la oferta**: Ajustar el servicio principal si el mercado demanda variaciones específicas.
+- **Refinamiento de la oferta**: Ajustar la {tipo_oferta} principal si el mercado demanda variaciones específicas.
 - **Priorización de recursos**: Decidir si se aumenta el esfuerzo en el canal principal o se exploran alternativas según resultados.
 - **Preparación del siguiente ciclo**: Definir necesidades de presupuesto real basándose en los costes de estos primeros 90 días.
 - **Base para KPIs**: Definir métricas definitivas (conversión, coste de adquisición) para el segundo trimestre.
@@ -130,8 +135,8 @@ Basado en la Fase 06 y perfil ({profile['marketing_profile']}):
 
 {actions_block}
 ## Acciones para resolver vacíos detectados
-- **Vacío: Falta de evidencia (Testimonios/Casos)**: Durante los primeros 60 días, documentar el proceso con algún cliente actual para crear un "minicaso" de éxito.
-- **Vacío: Cliente demasiado amplio**: Las entrevistas de los días 1-30 deben servir para elegir un sub-segmento aún más específico.
+- **Vacío: Falta de evidencia (Testimonios/Casos)**: Durante los primeros 60 días, documentar el proceso con algún {tipo_cliente} actual para crear un "minicaso" de éxito.
+- **Vacío: Segmento demasiado amplio**: Las entrevistas de los días 1-30 deben servir para elegir un sub-segmento aún más específico.
 - **Vacío: Información de competencia**: Dedicar 4 horas en el mes 1 a buscar y documentar la presencia de 3 competidores directos.
 - **Vacío: Ajuste de presupuesto**: Validar el coste de las herramientas mínimas antes del día 30.
 
@@ -153,7 +158,7 @@ Basado en la Fase 06 y perfil ({profile['marketing_profile']}):
 - Producción de piezas finales (videos, diseños complejos, landing pages).
 - Presupuesto de inversión publicitaria cerrado.
 - Dashboard de KPIs definitivo con métricas de rendimiento histórico.
-- Automatización de procesos de marketing o ventas.
+- Automatización de procesos comerciales o de marketing.
 
 ## Recomendación para la siguiente fase
 09_presupuesto_marketing
