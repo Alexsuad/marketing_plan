@@ -1,15 +1,24 @@
-# Gate: Coherencia Cliente -> Propuesta
+# Gate: Coherencia Cliente - Propuesta (Multimodelo)
 
-> [!NOTE]
-> Estos gates son especificaciones operativas documentales. No son todavía validadores ejecutables en Python. Su automatización queda pendiente para una fase posterior.
+## Propósito
+Validar que existe un encaje lógico y comercial entre el perfil del cliente, el problema identificado y la oferta propuesta según el modelo de negocio.
 
-- **Nombre:** gate_coherencia_cliente_propuesta
-- **Propósito:** Validar que lo que se ofrece soluciona directamente el dolor del cliente elegido y no está adornado con jerga vacía.
-- **Cuándo se activa:** Después de `skill_propuesta_valor` y `skill_estrategia_comunicacion`.
-- **Entradas:** `03_cliente_objetivo_y_segmentos.md`, `04_propuesta_valor_y_posicionamiento.md`, `07_estrategia_comunicacion.md`.
-- **Criterios de Aprobación:** La propuesta aborda un dolor/objeción del cliente sin usar superlativos ("líder", "el mejor"). Los pilares de comunicación mapean 1 a 1 con dolores u objeciones.
-- **Criterios de Bloqueo:** Uso de superlativos vacíos detectados, o pilares de contenido genéricos sin relación con el cliente (ej. "frases motivacionales" para un B2B industrial).
-- **Salida:** `estado_coherencia_aprobada` o `estado_incoherencia_detectada`.
-- **Agente Responsable:** `auditor_plan_marketing`.
-- **Evidencia requerida:** Tabla o lista emparejando `Pilar de contenido` -> `Dolor del cliente`.
-- **Estado final posible:** `Aprobado`, `Observaciones`.
+## Criterios de Evaluación
+1. **Encaje de Modelo**: La oferta debe ser coherente con el `tipo_negocio` (ej. no proponer consultoría en un eCommerce puro).
+2. **Dolor vs. Solución**: La propuesta de valor debe resolver directamente el problema operativo o emocional del cliente objetivo definido.
+3. **Rol de Decisión**: La propuesta debe hablar al decisor identificado (ej. comprador técnico en Industrial, decisor de negocio en B2B).
+4. **Viabilidad Percibida**: ¿El cliente objetivo realmente compraría esta oferta para resolver este problema bajo estas condiciones?
+
+## Validación por Modelo de Negocio
+- **ecommerce_transaccional**: Debe haber foco en el producto, la facilidad de compra, la confianza técnica, la diferenciación clara y la logística.
+- **b2b_consultivo**: Debe haber foco en el decisor de negocio, la autoridad del experto, el problema operativo y el ahorro/eficiencia.
+- **b2b_producto_industrial**: Debe haber foco en el comprador técnico, la ficha de especificaciones, la homologación y la garantía de suministro.
+- **retail_fisico**: Debe haber foco en el cliente local, la motivación de visita física, la cercanía y la experiencia inmediata.
+- **educativo_formativo**: Debe haber foco en el alumno/familia/empresa, la promesa de aprendizaje, la prueba social y la claridad del programa.
+- **hibrido_producto_servicio**: Debe haber foco en la conexión entre la adquisición del producto físico y el valor del soporte/mantenimiento.
+- **b2c_local_servicios**: Debe haber foco en la urgencia/necesidad de cercanía, el sistema de reservas, la reputación local y la rapidez.
+
+## Acciones en caso de fallo
+- **Bloquear**: Si la propuesta de valor es genérica y no resuelve el problema específico del cliente.
+- **Revisar**: Si el lenguaje utilizado no se corresponde con el modelo de negocio (ej. sesgo de "servicios" en planes de producto).
+- **Insuficiencia**: Si no está claro quién es el decisor o cuál es el problema raíz.

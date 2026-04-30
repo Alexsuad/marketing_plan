@@ -1,15 +1,25 @@
-# Gate: KPIs Medibles
+# Gate: KPIs Medibles y Específicos (Multimodelo)
 
-> [!NOTE]
-> Estos gates son especificaciones operativas documentales. No son todavía validadores ejecutables en Python. Su automatización queda pendiente para una fase posterior.
+## Propósito
+Validar que los indicadores de éxito propuestos son técnicos, medibles y adecuados para el modelo de negocio y los objetivos marcados.
 
-- **Nombre:** gate_kpis_medibles
-- **Propósito:** Asegurar que el plan se mida con métricas de negocio, no de vanidad.
-- **Cuándo se activa:** Después de `skill_kpis`.
-- **Entradas:** `10_kpis_y_medicion.md`.
-- **Criterios de Aprobación:** Hay un KPI principal atado a adquisición, costo o conversión; las herramientas de medición sugeridas son acordes a la madurez de la empresa.
-- **Criterios de Bloqueo:** Solo existen métricas de vanidad (likes, reproducciones) como KPI principal; se sugieren analíticas Enterprise para un negocio hiper-local de bajo recurso.
-- **Salida:** `estado_kpis_aprobados` o `estado_kpis_vanidosos`.
-- **Agente Responsable:** `analista_metricas`.
-- **Evidencia requerida:** Listado de los KPIs principales justificando su impacto de negocio.
-- **Estado final posible:** `Aprobado`, `Bloqueado`.
+## Criterios de Evaluación
+1. **Relevancia de Modelo**: Los KPIs deben medir lo que realmente importa para el éxito del negocio (ej. ROAS en eCommerce vs. Reuniones en B2B).
+2. **Estructura Técnica**: Cada KPI debe tener una Unidad de medida, una Frecuencia de revisión y una Fuente de datos identificada.
+3. **Conexión con Objetivo**: El KPI debe permitir evaluar si se está cumpliendo el `objetivo_marketing` definido en el brief.
+4. **Accionabilidad**: ¿El KPI permite tomar decisiones correctivas si el resultado no es el esperado?
+
+## Validación por Modelo de Negocio
+- **ecommerce_transaccional**: Aceptar ROAS, CPA, Tasa de Conversión Web, Ticket Medio, Abandono de Carrito y Recompra.
+- **b2b_consultivo**: Aceptar CPL, MQL/SQL, Número de reuniones generadas, Tasa de conversión a oportunidad y Ciclo de venta.
+- **b2b_producto_industrial**: Aceptar RFQs (Solicitudes de cotización), Cotizaciones enviadas, Homologaciones y contactos de distribuidores.
+- **retail_fisico**: Aceptar Visitas a tienda, Llamadas desde perfiles locales, Reseñas nuevas y volumen de ventas físicas.
+- **educativo_formativo**: Aceptar Número de matrículas, Asistencia a sesiones, Coste por Inscripción y Tasa de finalización.
+- **hibrido_producto_servicio**: Aceptar Venta inicial, Activación de servicios de soporte, Renovación de contratos y Recurrencia.
+- **b2c_local_servicios**: Aceptar Reservas confirmadas, Llamadas, Reseñas positivas y Tasa de asistencia (no-show).
+
+## Acciones en caso de fallo
+- **Bloquear**: Cualquier KPI que no tenga definida su Fuente de medición o Frecuencia.
+- **Bloquear**: Métricas de vanidad (likes, seguidores) que no estén vinculadas a un objetivo de negocio claro.
+- **Revisar**: Si el número de KPIs es excesivo (más de 5 principales) lo que dificulta el seguimiento.
+- **Insuficiencia**: Si los KPIs propuestos no permiten evaluar el retorno de la inversión (ROI/ROAS).

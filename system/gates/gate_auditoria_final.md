@@ -1,15 +1,26 @@
-# Gate: Auditoría Final
+# Gate: Auditoría Final de Coherencia (Multimodelo)
 
-> [!NOTE]
-> Estos gates son especificaciones operativas documentales. No son todavía validadores ejecutables en Python. Su automatización queda pendiente para una fase posterior.
+## Propósito
+Realizar una validación integral del Plan de Marketing antes de su entrega, asegurando la alineación total entre estrategia, operativa y modelo de negocio.
 
-- **Nombre:** gate_auditoria_final
-- **Propósito:** La última barrera antes de dar por completado un hito de entrega del plan.
-- **Cuándo se activa:** Después de `skill_auditoria_coherencia`.
-- **Entradas:** Todo el directorio `outputs/plan_actual/`.
-- **Criterios de Aprobación:** Todos los gates anteriores están aprobados. Coherencia narrativa end-to-end.
-- **Criterios de Bloqueo:** Contradicciones (ej. canal es LinkedIn pero cliente objetivo no usa LinkedIn detectado en auditoría).
-- **Salida:** `estado_plan_marketing_validado_para_entrega` o `estado_plan_marketing_con_fallas`.
-- **Agente Responsable:** `auditor_plan_marketing`.
-- **Evidencia requerida:** Reporte final de auditoría con veredicto.
-- **Estado final posible:** `Aprobado_Global`, `Falla_Estructural`.
+## Criterios de Evaluación
+1. **Coherencia Estratégica**: ¿Encajan Diagnóstico -> Cliente -> Propuesta -> Competencia?
+2. **Coherencia Operativa**: ¿Encajan Canales -> Comunicación -> Plan de Acción?
+3. **Coherencia Financiera y de Medición**: ¿Encajan Presupuesto -> Objetivos -> KPIs?
+4. **Coherencia Multimodelo**: ¿Se ha mantenido el rigor del `tipo_negocio` en todo el documento? (Evitar planes genéricos de "servicios").
+
+## Niveles de Hallazgos
+- **Hecho Confirmado**: Información validada y coherente con el brief y el modelo.
+- **Hipótesis**: Suposiciones que el cliente debe validar en el mercado.
+- **Observación**: Oportunidades de mejora o ajustes no bloqueantes.
+- **Bloqueo**: Incoherencia crítica que invalida la ejecución del plan.
+
+## Validación de Rigor Multimodelo
+- **Cero Genéricos**: No se aceptan frases como "servicio de calidad", "atención personalizada" o "queremos vender más" sin contexto técnico.
+- **Lenguaje Específico**: El plan debe usar la terminología del sector (ej. ticket medio en eCommerce, homologación en Industrial, matrícula en Educativo).
+- **Viabilidad**: El plan debe ser ejecutable con las restricciones y capacidades declaradas en el brief.
+
+## Acciones en caso de fallo
+- **Rechazar**: Si existe al menos un **Bloqueo** o si el plan suena a plantilla genérica de servicios sin adaptación real.
+- **Condicionar**: Si existen **Hipótesis** o **Observaciones** importantes que deben ser resueltas antes de iniciar la inversión.
+- **Aprobar**: Solo cuando la coherencia multimodelo es total y los riesgos están identificados.
