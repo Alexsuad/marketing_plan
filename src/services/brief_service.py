@@ -36,25 +36,30 @@ aprobado_estructuralmente
 
 ## Datos principales
 - **nombre_negocio:** {data.get('nombre_negocio', 'N/A')}
-- **tipo_empresa_servicios:** {data.get('tipo_empresa_servicios', 'N/A')}
-- **servicio_principal:** {data.get('servicio_principal', 'N/A')}
+- **tipo_negocio:** {data.get('tipo_negocio', 'N/A')}
+- **oferta_principal:** {data.get('oferta_principal', 'N/A')}
 - **cliente_objetivo:** {data.get('cliente_objetivo', 'N/A')}
 - **problema_que_resuelve:** {data.get('problema_que_resuelve', 'N/A')}
 - **objetivo_principal:** {data.get('objetivo_principal', 'N/A')}
 - **presupuesto_marketing:** {data.get('presupuesto_marketing', 'Opcional')}
+- **canales_actuales:** {data.get('canales_actuales', 'No informados')}
+- **ubicacion:** {data.get('ubicacion', 'No informada')}
 
 ## Campos obligatorios completados
 - nombre_negocio
-- tipo_empresa_servicios
-- servicio_principal
+- tipo_negocio
+- oferta_principal
 - cliente_objetivo
 - problema_que_resuelve
 - objetivo_principal
 
 ## Hipótesis iniciales
-- Pendiente validar si el servicio principal '{data.get('servicio_principal')}' tiene demanda suficiente en el segmento indicado.
+- Pendiente validar si la oferta principal '{data.get('oferta_principal')}' tiene demanda suficiente en el segmento indicado.
 - Pendiente validar si el cliente objetivo definido es el más adecuado para la oferta.
 - Pendiente contrastar el problema declarado con señales reales del mercado.
+
+## Notas adicionales
+{data.get('notas_adicionales', 'No hay notas adicionales.')}
 
 ## Información faltante
 - No falta información obligatoria para iniciar el diagnóstico.
