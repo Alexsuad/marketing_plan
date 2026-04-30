@@ -1,6 +1,6 @@
 ---
 name: skill_auditoria_coherencia
-description: Revisar coherencia, calidad y riesgos del Plan de Marketing.
+description: Auditar la lógica, terminología y viabilidad estratégica de todas las fases del plan según el modelo de negocio.
 ---
 
 # skill_auditoria_coherencia
@@ -9,38 +9,62 @@ description: Revisar coherencia, calidad y riesgos del Plan de Marketing.
 activa_documental
 
 ## Objetivo
-Revisar coherencia, calidad y riesgos del Plan de Marketing.
+Garantizar que el Plan de Marketing no tenga contradicciones internas y que la estrategia elegida sea la adecuada para el modelo de negocio detectado.
 
 ## Cuándo usarla
-Usar al cierre del plan o cuando un gate detecte posibles inconsistencias.
+Usar de forma continua al cierre de cada bloque de fases y como validación final antes del resumen ejecutivo.
 
 ## Agente activador
 `auditor_plan_marketing`
 
 ## Entradas necesarias
-- Todos los documentos del plan.
-- Brief validado.
-- Outputs de gates y contexto inicial.
+- `tipo_negocio` o `marketing_profile`.
+- Documentos de las fases a auditar (Diagnóstico, Cliente, Propuesta, Canales, Acción, etc.).
+- `oferta_principal` y `cliente_objetivo`.
 
 ## Proceso
-1. Revisar coherencia entre documentos.
-2. Identificar contradicciones e información faltante.
-3. Cuestionar canales injustificados y acciones poco realistas.
-4. Comprobar que los KPIs respondan a los objetivos.
-5. Identificar riesgos de ejecución.
+1. Evaluar la coherencia estratégica: ¿El diagnóstico justifica al cliente elegido? ¿La propuesta resuelve el problema detectado?
+2. Evaluar la coherencia operativa: ¿Los canales son los que usa el cliente objetivo? ¿El plan de acción es ejecutable por el equipo?
+3. Evaluar la coherencia multimodelo: ¿El lenguaje y los KPIs son los correctos para el tipo de negocio (ej. no usar lenguaje de servicios en eCommerce)?
+4. Separar los hallazgos en:
+   - **Hecho confirmado**: Dato verificado en el plan.
+   - **Hipótesis**: Suposición que requiere validación.
+   - **Observación**: Sugerencia de mejora no crítica.
+   - **Bloqueo**: Incoherencia grave que impide avanzar.
+
+## Adaptación por modelo de negocio
+- **ecommerce_transaccional**: No aprobar si falta foco en conversión, checkout, ROAS/CPA o estrategia de recompra.
+- **b2b_consultivo**: No aprobar si falta foco en autoridad, generación de confianza, reuniones o gestión del ciclo de venta largo.
+- **b2b_producto_industrial**: No aprobar si falta foco en ficha técnica, homologación, red de distribución o confianza técnica.
+- **retail_fisico**: No aprobar si falta foco en visibilidad local, tráfico a punto de venta, reseñas o radio de influencia geográfica.
+- **educativo_formativo**: No aprobar si falta foco en captación de alumnos, prueba social de resultados o claridad del programa.
+- **hibrido_producto_servicio**: No aprobar si se ignora la conexión entre la venta inicial y el soporte/mantenimiento recurrente.
+- **b2c_local_servicios**: No aprobar si falta foco en sistema de reservas, reputación local, reseñas o rapidez de respuesta.
+
+## Cuándo declarar insuficiencia
+Debe declarar insuficiencia si:
+- No se puede identificar el modelo de negocio base.
+- Faltan evidencias o documentos clave para realizar el cruce de coherencia.
+- El plan utiliza términos genéricos que ocultan la falta de estrategia real.
+- Las contradicciones entre fases son tan graves que invalidan la viabilidad del plan.
+
+## Criterios de bloqueo
+- El canal elegido es imposible de usar por el cliente objetivo definido.
+- El presupuesto es insuficiente para el objetivo marcado.
+- La propuesta de valor no resuelve el problema identificado en el diagnóstico.
 
 ## Salida esperada
-`outputs/plan_actual/12_auditoria_final.md` (o reportes parciales).
+`docs/audits/auditoria_coherencia_nombre_proyecto.md`
 
 ## Gates relacionados
 `gate_auditoria_final`
 
 ## Criterios de insuficiencia
-Debe bloquear si falta un documento central, si el cliente objetivo no coincide con canales, si la propuesta es genérica, el plan de acción no ejecutable, o los KPIs no medibles.
+La skill es insuficiente si se limita a una revisión gramatical sin entrar en la lógica comercial y operativa del modelo de negocio.
 
 ## Errores frecuentes
-- Aprobar sin revisar contra el brief original.
-- Centrarse solo en gramática y olvidar la coherencia estratégica.
+- Ser complaciente con incoherencias "menores" que luego rompen el plan.
+- No detectar cuando un negocio de producto está siendo tratado como uno de servicios.
 
 ## Límites
-No reescribe el plan; documenta observaciones y requiere que los agentes correspondientes lo arreglen.
+No modifica el plan; solo emite el informe de auditoría y señala los puntos de corrección necesarios.
