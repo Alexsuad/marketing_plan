@@ -36,7 +36,8 @@ def validate_brief(project_name: str) -> list[str]:
         "oferta_principal",
         "cliente_objetivo",
         "problema_que_resuelve",
-        "objetivo_principal"
+        "objetivo_principal",
+        "zona_geografica"
     ]
     
     default_values = ["[Completar]", "", "[]", "none", "n/a", "null"]
