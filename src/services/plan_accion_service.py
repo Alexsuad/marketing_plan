@@ -43,7 +43,58 @@ def generate_plan_accion_output(project_name: str) -> str:
     terminology = profile.get("terminology", {})
     tipo_oferta = terminology.get("oferta", "oferta")
     tipo_cliente = terminology.get("cliente", "cliente")
-    accion_vincular = terminology.get("accion_principal", "contratar")
+    
+    # 3.1 Variables de redacción natural
+    redaccion_map = {
+        "ecommerce_transaccional": {
+            "oferta_con_articulo": "el producto ecommerce",
+            "oferta_para_contexto": "del producto ecommerce",
+            "cliente_plural": "usuarios"
+        },
+        "b2c_producto_ecommerce": {
+            "oferta_con_articulo": "el producto",
+            "oferta_para_contexto": "del producto",
+            "cliente_plural": "clientes"
+        },
+        "b2b_consultivo": {
+            "oferta_con_articulo": "el servicio consultivo",
+            "oferta_para_contexto": "del servicio consultivo",
+            "cliente_plural": "clientes/empresas"
+        },
+        "b2c_local_servicios": {
+            "oferta_con_articulo": "el servicio local",
+            "oferta_para_contexto": "del servicio local",
+            "cliente_plural": "clientes"
+        },
+        "educativo_formativo": {
+            "oferta_con_articulo": "la formación",
+            "oferta_para_contexto": "de la formación",
+            "cliente_plural": "alumnos/estudiantes"
+        },
+        "retail_fisico": {
+            "oferta_con_articulo": "la propuesta comercial",
+            "oferta_para_contexto": "de la propuesta comercial",
+            "cliente_plural": "visitantes/clientes"
+        },
+        "b2b_producto_industrial": {
+            "oferta_con_articulo": "el producto industrial",
+            "oferta_para_contexto": "del producto industrial",
+            "cliente_plural": "empresas/compradores"
+        },
+        "hibrido_producto_servicio": {
+            "oferta_con_articulo": "la solución integral",
+            "oferta_para_contexto": "de la solución integral",
+            "cliente_plural": "socios/clientes"
+        }
+    }
+    config_redaccion = redaccion_map.get(profile["marketing_profile"], {
+        "oferta_con_articulo": f"la {tipo_oferta}",
+        "oferta_para_contexto": f"de la {tipo_oferta}",
+        "cliente_plural": f"{tipo_cliente}s"
+    })
+    oferta_con_articulo = config_redaccion["oferta_con_articulo"]
+    oferta_para_contexto = config_redaccion["oferta_para_contexto"]
+    cliente_plural = config_redaccion["cliente_plural"]
 
     found_files = [
         "01_brief_negocio_validado.md", "02_diagnostico_marketing.md",
@@ -100,9 +151,9 @@ Esta fase ordena las acciones de marketing necesarias para los próximos 90 día
 - **Capacidad operativa**: Se asume capacidad para gestionar al menos un canal prioritario de forma constante.
 
 ## Prioridades estratégicas de los 90 días
-1. **Consolidar la base estratégica**: Asegurar que los mensajes de la {tipo_oferta} '{oferta_principal}' resuenan con el problema '{problema_principal}'.
+1. **Consolidar la base estratégica**: Asegurar que los mensajes {oferta_para_contexto} '{oferta_principal}' resuenan con el problema '{problema_principal}'.
 2. **Activación de visibilidad controlada**: Iniciar presencia en los canales prioritarios para recoger señales de interés.
-3. **Validación cualitativa**: Documentar objeciones y dudas reales de los {tipo_cliente}s potenciales para ajustar la oferta.
+3. **Validación cualitativa**: Documentar objeciones y dudas reales de los {cliente_plural} potenciales para ajustar la oferta.
 4. **Preparación de activos mínimos**: Crear las piezas básicas necesarias para operar en los canales seleccionados.
 
 ## Tácticas prioritarias según perfil ({profile['marketing_profile']})
@@ -120,12 +171,12 @@ Esta fase ordena las acciones de marketing necesarias para los próximos 90 día
 - **Activación del canal prioritario #1**: Iniciar las primeras acciones en el canal principal de la Fase 06.
 - **Presencia básica**: Asegurar visibilidad mínima en los canales secundarios de apoyo.
 - **Prueba de Mensajes**: Utilizar los mensajes de la Fase 07 en interacciones reales y documentar el nivel de respuesta.
-- **Recogida de señales**: Registrar qué beneficios de la {tipo_oferta} generan más interés y cuáles son ignorados.
+- **Recogida de señales**: Registrar qué beneficios {oferta_para_contexto} generan más interés y cuáles son ignorados.
 - **Gestión de objeciones**: Aplicar las respuestas diseñadas en la Fase 07 y anotar nuevas objeciones no previstas.
 
 ### Días 61 a 90 - Ajuste y consolidación
 - **Análisis de señales**: Evaluar qué canal de la Fase 06 ha mostrado mayor potencial de conversión.
-- **Refinamiento de la oferta**: Ajustar la {tipo_oferta} principal si el mercado demanda variaciones específicas.
+- **Refinamiento de la oferta**: Ajustar {oferta_con_articulo} principal si el mercado demanda variaciones específicas.
 - **Priorización de recursos**: Decidir si se aumenta el esfuerzo en el canal principal o se exploran alternativas según resultados.
 - **Preparación del siguiente ciclo**: Definir necesidades de presupuesto real basándose en los costes de estos primeros 90 días.
 - **Base para KPIs**: Definir métricas definitivas (conversión, coste de adquisición) para el segundo trimestre.

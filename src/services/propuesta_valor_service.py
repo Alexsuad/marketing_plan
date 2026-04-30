@@ -47,15 +47,69 @@ def generate_propuesta_valor_output(project_name: str) -> str:
     # Resolver perfil de marketing
     from src.core.marketing_profile_resolver import resolve_marketing_profile
     profile = resolve_marketing_profile(brief_data)
+    
+    # 3. Extraer terminología comercial dinámica
     terminology = profile.get("terminology", {})
     tipo_oferta = terminology.get("oferta", "oferta")
     tipo_cliente = terminology.get("cliente", "cliente")
-    accion_vincular = terminology.get("accion_principal", "contratar")
+    
+    # 3.1 Redacción contextual para la decisión de compra/contratación
+    redaccion_map = {
+        "ecommerce_transaccional": {
+            "decision": "adquirir un producto ecommerce fiable",
+            "oferta_con_articulo": "el producto ecommerce",
+            "oferta_para_contexto": "del producto ecommerce"
+        },
+        "b2c_producto_ecommerce": {
+            "decision": "adquirir un producto fiable",
+            "oferta_con_articulo": "el producto",
+            "oferta_para_contexto": "del producto"
+        },
+        "b2b_consultivo": {
+            "decision": "contratar un servicio especializado",
+            "oferta_con_articulo": "el servicio consultivo",
+            "oferta_para_contexto": "del servicio consultivo"
+        },
+        "b2c_local_servicios": {
+            "decision": "contratar un servicio de confianza",
+            "oferta_con_articulo": "el servicio local",
+            "oferta_para_contexto": "del servicio local"
+        },
+        "educativo_formativo": {
+            "decision": "inscribirse en una formación adecuada",
+            "oferta_con_articulo": "la formación",
+            "oferta_para_contexto": "de la formación"
+        },
+        "retail_fisico": {
+            "decision": "visitar una propuesta local",
+            "oferta_con_articulo": "la propuesta comercial",
+            "oferta_para_contexto": "de la propuesta comercial"
+        },
+        "b2b_producto_industrial": {
+            "decision": "adquirir un producto industrial certificado",
+            "oferta_con_articulo": "el producto industrial",
+            "oferta_para_contexto": "del producto industrial"
+        },
+        "hibrido_producto_servicio": {
+            "decision": "adquirir una solución integral con soporte",
+            "oferta_con_articulo": "la solución integral",
+            "oferta_para_contexto": "de la solución integral"
+        }
+    }
+    config_redaccion = redaccion_map.get(profile["marketing_profile"], {
+        "decision": f"adquirir {tipo_oferta} fiable",
+        "oferta_con_articulo": f"la {tipo_oferta}",
+        "oferta_para_contexto": f"de la {tipo_oferta}"
+    })
+    decision_oferta = config_redaccion["decision"]
+    oferta_con_articulo = config_redaccion["oferta_con_articulo"]
+    oferta_para_contexto = config_redaccion["oferta_para_contexto"]
 
-    # Adaptar enfoque según perfil (Servicio vs Producto)
-    es_servicio = profile["marketing_profile"] in ["b2b_consultivo", "b2c_local_servicios", "hibrido_producto_servicio"]
-    enfoque_valor = "Acompañamiento especializado" if es_servicio else f"Solución mediante {tipo_oferta}"
-    verbo_gestion = "delegar la gestión en un experto" if es_servicio else f"adquirir una {tipo_oferta} fiable"
+    # 4. Adaptar lógica según perfil
+    es_servicio = profile["marketing_profile"] in ["b2b_consultivo", "b2c_local_servicios"]
+    es_hibrido = profile["marketing_profile"] == "hibrido_producto_servicio"
+    
+    prefijo_hipotesis = "Solución integral" if es_hibrido else ("Acompañamiento especializado" if es_servicio else f"Producto premium")
 
     # Leer Fase 03 para extraer segmentos y dolores
     phase_03_content = read_markdown_file(phase_03_path)
@@ -114,12 +168,12 @@ Pendiente de validar si este es el dolor más agudo para el segmento prioritario
 {objeciones}
 
 ## Propuesta de valor inicial
-Hipótesis: {enfoque_valor} para resolver '{problema_principal}' mediante '{oferta_principal}', asegurando la eficiencia y satisfacción del {tipo_cliente}.
+Hipótesis: {prefijo_hipotesis} orientado a resolver '{problema_principal}' mediante '{oferta_principal}', asegurando la eficiencia y satisfacción del {tipo_cliente}.
 
 ## Beneficios principales
 - Hipótesis: Reducción de la incertidumbre en el proceso de obtención de '{oferta_principal}'.
 - Hipótesis: Resolución efectiva del problema de '{problema_principal}'.
-- Hipótesis: Ahorro de tiempo o recursos al {verbo_gestion}.
+- Hipótesis: Ahorro de tiempo o recursos al {decision_oferta}.
 
 ## Diferenciales posibles
 - Hipótesis: Enfoque específico en el segmento declarado frente a alternativas genéricas.
@@ -132,17 +186,17 @@ Nota: No se cuenta todavía con evidencia suficiente para afirmar una diferencia
 - Pendiente de validar: Casos de éxito, calidad técnica, trayectoria o garantías específicas.
 
 ## Posicionamiento inicial
-La oferta se posiciona como una opción de 'fiabilidad y excelencia' para '{oferta_principal}'. Según la información disponible, el enfoque inicial debe estar en la resolución del dolor agudo y la calidad percibida.
+La oferta se posiciona como una opción de 'fiabilidad y excelencia' para {oferta_para_contexto}. Según la información disponible, el enfoque inicial debe estar en la resolución del dolor agudo y la calidad percibida.
 
 ## Mensajes base
-- "Resuelva su '{problema_principal}' mediante '{oferta_principal}' de alta calidad."
+- "Resuelva su '{problema_principal}' mediante {oferta_para_contexto} de alta calidad."
 - "Confianza y eficacia para una solución segura."
-- "Claridad y excelencia en su '{oferta_principal}'."
+- "Claridad y excelencia en su {oferta_para_contexto}."
 
 ## Límites de la promesa
 - No se puede prometer que la oferta sea la más económica sin conocer la competencia.
 - No se puede prometer una resolución instantánea sin evaluar la complejidad técnica.
-- No se puede prometer resultados comerciales ajenos al alcance de la {tipo_oferta}.
+- No se puede prometer resultados comerciales ajenos al alcance de {oferta_para_contexto}.
 
 ## Información faltante para fortalecer la propuesta
 - Evidencia de resultados pasados (casos de estudio).
