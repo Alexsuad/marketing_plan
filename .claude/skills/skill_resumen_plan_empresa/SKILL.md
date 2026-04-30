@@ -28,6 +28,11 @@ Usar como paso final una vez generados todos los documentos estratégicos y oper
 3. Destacar los KPIs críticos y el presupuesto necesario.
 4. Asegurar que el tono sea profesional y adaptado al modelo de negocio (no sonar genérico).
 5. Validar la coherencia final entre todas las piezas del plan.
+6. **Integridad de Datos**: Incluir obligatoriamente la sección `## Integridad de Datos` detallando:
+   - Datos confirmados (procedentes del brief).
+   - Supuestos operativos (hipótesis aplicadas).
+   - Datos faltantes y su impacto en la fiabilidad del plan.
+   - Recomendaciones de validación antes de la ejecución.
 
 ## Adaptación por modelo de negocio
 - **ecommerce_transaccional**: Foco en rentabilidad digital (ROAS), escala de ventas online y eficiencia logística.

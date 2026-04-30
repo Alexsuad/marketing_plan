@@ -31,6 +31,8 @@ Usar de forma continua al cierre de cada bloque de fases y como validación fina
    - **Hipótesis**: Suposición que requiere validación.
    - **Observación**: Sugerencia de mejora no crítica.
    - **Bloqueo**: Incoherencia grave que impide avanzar.
+5. **Auditoría de Integridad**: Verificar que no se presenten supuestos como hechos, que los vacíos críticos no estén ocultos y que existan recomendaciones de validación claras.
+6. **Auditoría de Privacidad**: Asegurar que los datos sensibles (márgenes, facturación cruda) no se expongan de forma que vulneren la seguridad del negocio.
 
 ## Adaptación por modelo de negocio
 - **ecommerce_transaccional**: No aprobar si falta foco en conversión, checkout, ROAS/CPA o estrategia de recompra.
