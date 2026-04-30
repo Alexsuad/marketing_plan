@@ -32,13 +32,30 @@ def generate_propuesta_valor_output(project_name: str) -> str:
     
     # Leer brief
     brief_path = os.path.join(context_dir, "brief_negocio.md")
+    brief_data = {}
     if os.path.exists(brief_path):
         found_files.append("brief_negocio.md")
         content = read_markdown_file(brief_path)
-        oferta = extract_markdown_field(content, "oferta_principal")
-        prob = extract_markdown_field(content, "problema_que_resuelve")
+        from src.utils.markdown_utils import extract_brief_fields
+        brief_data = extract_brief_fields(content)
+        
+        oferta = brief_data.get("oferta_principal")
+        prob = brief_data.get("problema_que_resuelve")
         data["oferta_principal"] = oferta if oferta else "[No informado]"
         data["problema_que_resuelve"] = prob if prob else "[No informado]"
+
+    # Resolver perfil de marketing
+    from src.core.marketing_profile_resolver import resolve_marketing_profile
+    profile = resolve_marketing_profile(brief_data)
+    terminology = profile.get("terminology", {})
+    tipo_oferta = terminology.get("oferta", "oferta")
+    tipo_cliente = terminology.get("cliente", "cliente")
+    accion_vincular = terminology.get("accion_principal", "contratar")
+
+    # Adaptar enfoque según perfil (Servicio vs Producto)
+    es_servicio = profile["marketing_profile"] in ["b2b_consultivo", "b2c_local_servicios", "hibrido_producto_servicio"]
+    enfoque_valor = "Acompañamiento especializado" if es_servicio else f"Solución mediante {tipo_oferta}"
+    verbo_gestion = "delegar la gestión en un experto" if es_servicio else f"adquirir una {tipo_oferta} fiable"
 
     # Leer Fase 03 para extraer segmentos y dolores
     phase_03_content = read_markdown_file(phase_03_path)
@@ -97,35 +114,35 @@ Pendiente de validar si este es el dolor más agudo para el segmento prioritario
 {objeciones}
 
 ## Propuesta de valor inicial
-Hipótesis: Acompañamiento especializado para resolver '{problema_principal}' mediante '{oferta_principal}', asegurando la eficiencia y tranquilidad operativa del cliente.
+Hipótesis: {enfoque_valor} para resolver '{problema_principal}' mediante '{oferta_principal}', asegurando la eficiencia y satisfacción del {tipo_cliente}.
 
 ## Beneficios principales
-- Hipótesis: Reducción de la incertidumbre en el proceso de '{oferta_principal}'.
+- Hipótesis: Reducción de la incertidumbre en el proceso de obtención de '{oferta_principal}'.
 - Hipótesis: Resolución efectiva del problema de '{problema_principal}'.
-- Hipótesis: Ahorro de tiempo o recursos al delegar la gestión en un experto.
+- Hipótesis: Ahorro de tiempo o recursos al {verbo_gestion}.
 
 ## Diferenciales posibles
-- Hipótesis: Enfoque específico en el segmento declarado frente a proveedores genéricos.
-- Hipótesis: Metodología de implementación con bajo impacto en la operativa diaria.
-- Hipótesis: Transparencia y acompañamiento cercano.
+- Hipótesis: Enfoque específico en el segmento declarado frente a alternativas genéricas.
+- Hipótesis: Calidad en la entrega y bajo impacto en la operativa diaria.
+- Hipótesis: Transparencia y confianza en el proceso.
 Nota: No se cuenta todavía con evidencia suficiente para afirmar una diferenciación competitiva real.
 
 ## Razones para creer
 - Evidencia disponible: La oferta de '{oferta_principal}' ataca directamente el problema '{problema_principal}'.
-- Pendiente de validar: Casos de éxito, certificaciones técnicas, años de experiencia o garantías específicas.
+- Pendiente de validar: Casos de éxito, calidad técnica, trayectoria o garantías específicas.
 
 ## Posicionamiento inicial
-La oferta podría posicionarse como una opción de 'tranquilidad y seguridad operativa' para '{oferta_principal}'. Según la información disponible, el enfoque inicial debe estar en la fiabilidad del proceso y la resolución del dolor agudo.
+La oferta se posiciona como una opción de 'fiabilidad y excelencia' para '{oferta_principal}'. Según la información disponible, el enfoque inicial debe estar en la resolución del dolor agudo y la calidad percibida.
 
 ## Mensajes base
-- "Resuelva su '{problema_principal}' con el apoyo de expertos en '{oferta_principal}'."
-- "Acompañamiento cercano para una solución efectiva y segura."
-- "Claridad y confianza en la gestión de su '{oferta_principal}'."
+- "Resuelva su '{problema_principal}' mediante '{oferta_principal}' de alta calidad."
+- "Confianza y eficacia para una solución segura."
+- "Claridad y excelencia en su '{oferta_principal}'."
 
 ## Límites de la promesa
 - No se puede prometer que la oferta sea la más económica sin conocer la competencia.
 - No se puede prometer una resolución instantánea sin evaluar la complejidad técnica.
-- No se puede prometer resultados comerciales ajenos al alcance del producto/servicio técnico.
+- No se puede prometer resultados comerciales ajenos al alcance de la {tipo_oferta}.
 
 ## Información faltante para fortalecer la propuesta
 - Evidencia de resultados pasados (casos de estudio).
