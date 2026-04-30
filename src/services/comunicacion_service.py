@@ -59,7 +59,13 @@ def generate_comunicacion_output(project_name: str) -> str:
         if os.path.exists(os.path.join(context_dir, opt)):
             found_files.append(opt)
 
-    # 3. Construir tono según perfil
+    # 3. Extraer terminología
+    terminology = profile.get("terminology", {})
+    tipo_oferta = terminology.get("oferta", "oferta")
+    tipo_cliente = terminology.get("cliente", "cliente")
+    accion_vincular = terminology.get("accion_principal", "contratar")
+
+    # 4. Construir tono según perfil
     tone_block = ""
     for guideline in profile["tone_guidelines"]:
         parts = guideline.split(":", 1)
@@ -68,18 +74,26 @@ def generate_comunicacion_output(project_name: str) -> str:
         else:
             tone_block += f"- {guideline}\n"
 
-    # 4. Construir mensajes por canal según perfil
+    # 5. Adaptar lógica según perfil
+    es_servicio = profile["marketing_profile"] in ["b2b_consultivo", "b2c_local_servicios", "hibrido_producto_servicio"]
+    palabras_positivas = ["Confianza", "Acompañamiento", "Claridad"] if es_servicio else ["Calidad premium", "Garantía", "Satisfacción"]
+    palabras_positivas += ["Resultados reales", "Transparencia"]
+    
+    frase_ayuda = f"trabajamos para que tu {tipo_oferta} sea la solución definitiva" if not es_servicio else "trabajamos para ayudarte a superarlo"
+    frase_posicionamiento = f"disfrutes de la excelencia en cada {tipo_oferta}" if not es_servicio else "puedas centrarte en lo que más importa"
+
+    # 6. Construir mensajes por canal según perfil
     messages_block = ""
     for channel in profile["recommended_channel_families"]:
         messages_block += f"""- **Canal: {channel.get('name', '[Nombre]')}**
   - **Enfoque comunicativo**: Comunicar cómo '{oferta_principal}' resuelve '{problema_principal}' a través de este canal.
-  - **Tipo de mensaje**: \"Entendemos que '{problema_principal}' dificulta tu día a día. En '{oferta_principal}' trabajamos para ayudarte a superarlo.\"
+  - **Tipo de mensaje**: \"Entendemos el impacto de '{problema_principal}'. Con '{oferta_principal}' {frase_ayuda}.\"
   - **Riesgo**: No adaptar el mensaje al formato y estilo propios de este canal.
   - **Condición**: Validar que el mensaje resuena antes de escalar la frecuencia.
 
 """
 
-    # 5. Documento completo
+    # 7. Documento completo
     output_content = f"""# 07 - Estrategia de Comunicación
 
 ## Estado del análisis
@@ -103,40 +117,40 @@ Esta fase define el tono, los mensajes clave, los pilares de comunicación y el 
 
 ## Problema central que debe comunicar
 El eje de la comunicación debe ser la resolución de: '{problema_principal}'.
-Se debe empatizar con el impacto negativo que este problema genera en el cliente antes de presentar la solución.
+Se debe empatizar con el impacto de este problema en el {tipo_cliente} antes de presentar la solución.
 
 ## Promesa comunicacional inicial
-Hipótesis: \"Queremos que resolver '{problema_principal}' sea fácil, seguro y accesible gracias a '{oferta_principal}'.\"
+Hipótesis: \"Queremos que {accion_vincular} '{oferta_principal}' sea la mejor decisión para resolver '{problema_principal}'.\"
 Nota: Esta promesa es provisional y depende de la validación real con el mercado.
 
 ## Tono recomendado
-Según el perfil de '{cliente_objetivo}' y la naturaleza de '{oferta_principal}', el tono debe ser:
+Según el perfil de '{cliente_objetivo}' y la naturaleza de la {tipo_oferta} '{oferta_principal}', el tono debe ser:
 {tone_block}
 Evitar tonos agresivos, urgencias artificiales o promesas exageradas que puedan dañar la credibilidad.
 
 ## Mensaje central
-\"Soluciones reales para '{problema_principal}': '{oferta_principal}' pensado para que puedas centrarte en lo que más importa.\"
+\"Soluciones reales para '{problema_principal}': '{oferta_principal}' para que {frase_posicionamiento}.\"
 
 ## Pilares de comunicación
 1. **Pilar: Especialización y Enfoque**
-   - **Objetivo**: Posicionar al negocio como experto en el problema específico del cliente.
-   - **Qué comunicar**: Conocimiento profundo del problema '{problema_principal}' y casos de uso comunes.
-   - **Qué evitar**: Hablar de servicios genéricos no relacionados con el problema principal.
+    - **Objetivo**: Posicionar el negocio como la opción preferida para resolver el problema específico.
+    - **Qué comunicar**: Conocimiento profundo de '{problema_principal}' y por qué '{oferta_principal}' es la mejor respuesta.
+    - **Qué evitar**: Hablar de temas genéricos no relacionados con la propuesta de valor.
 
-2. **Pilar: Seguridad y Bajo Riesgo**
-   - **Objetivo**: Neutralizar el miedo a probar la oferta por primera vez.
-   - **Qué comunicar**: Proceso claro, garantías, acompañamiento o calidad del producto.
-   - **Qué evitar**: Promesas de resolución instantánea o sin esfuerzo.
+2. **Pilar: Seguridad y Calidad**
+    - **Objetivo**: Neutralizar el miedo a la {accion_vincular} por primera vez.
+    - **Qué comunicar**: Proceso claro, garantías, soporte o calidad superior de la {tipo_oferta}.
+    - **Qué evitar**: Promesas de resolución instantánea sin base técnica.
 
-3. **Pilar: Valor y Resultados Esperados**
-   - **Objetivo**: Conectar la oferta con el beneficio real para el cliente.
-   - **Qué comunicar**: Qué gana el cliente después de resolver '{problema_principal}' (tiempo, bienestar, ahorro, eficiencia).
-   - **Qué evitar**: Centrarse solo en características de la oferta '{oferta_principal}'.
+3. **Pilar: Valor y Resultados**
+    - **Objetivo**: Conectar la {tipo_oferta} con el beneficio real para el {tipo_cliente}.
+    - **Qué comunicar**: Qué gana el {tipo_cliente} después de usar '{oferta_principal}' (tiempo, bienestar, ahorro, eficiencia).
+    - **Qué evitar**: Centrarse solo en características técnicas frías de '{oferta_principal}'.
 
 4. **Pilar: Transparencia y Confianza**
-   - **Objetivo**: Diferenciarse por la honestidad en la relación.
-   - **Qué comunicar**: Claridad en alcances, precios y qué esperar del servicio.
-   - **Qué evitar**: Ocultar posibles limitaciones o usar lenguaje confuso.
+    - **Objetivo**: Diferenciarse por la honestidad en la relación comercial.
+    - **Qué comunicar**: Claridad en alcances, precios y qué esperar de la {tipo_oferta}.
+    - **Qué evitar**: Ocultar limitaciones o usar lenguaje confuso.
 
 ## Mensajes por canal prioritario
 Basado en la Fase 06 y el perfil ({profile['marketing_profile']}):
@@ -146,42 +160,40 @@ Basado en la Fase 06 y el perfil ({profile['marketing_profile']}):
 Basado en las hipótesis de las Fases 03 y 04:
 
 - **Objeción: \"Es demasiado caro / No tengo presupuesto\"**
-  - **Respuesta Comunicacional**: Enfocar la comunicación en el coste de la inacción (lo que pierde el cliente por no resolver '{problema_principal}') frente a la inversión en la oferta.
+  - **Respuesta Comunicacional**: Enfocar la comunicación en el coste de la inacción frente a la inversión en la {tipo_oferta}.
 - **Objeción: \"No estoy seguro de que funcione para mi caso\"**
-  - **Respuesta Comunicacional**: Reforzar el pilar de 'Seguridad y Bajo Riesgo', explicando el proceso, las garantías o el soporte.
+  - **Respuesta Comunicacional**: Reforzar el pilar de 'Seguridad y Calidad', explicando el proceso, las garantías o el soporte.
 - **Objeción: \"No sé si realmente necesito '{oferta_principal}'\"**
-  - **Respuesta Comunicacional**: Pilar 'Educativo', mostrando cómo '{oferta_principal}' es la vía para resolver '{problema_principal}'.
+  - **Respuesta Comunicacional**: Mostrar cómo '{oferta_principal}' es la vía efectiva para resolver '{problema_principal}'.
 
-## Palabras o enfoques que conviene usar
-- Confianza
-- Acompañamiento
-- Claridad
-- Resultados reales
-- "Paso a paso"
-- Experiencia comprobable
-
+## Palabras o enfoques recomendados
+"""
+    for word in palabras_positivas:
+        output_content += f"- {word}\n"
+    
+    output_content += """
 ## Palabras o enfoques que conviene evitar
-- "Solución integral" (muy genérico)
-- "La mejor calidad" (sin evidencia)
-- "Líderes" (si no está validado)
-- Lenguaje excesivamente técnico sin explicar el beneficio.
+- \"Solución integral\" (muy genérico)
+- \"La mejor calidad\" (sin evidencia técnica)
+- \"Líderes\" (si no está validado por el mercado)
+- Lenguaje excesivamente técnico sin explicar el beneficio para el usuario.
 
 ## Reglas básicas de comunicación
 - **Prudencia**: No prometer resultados que no se hayan validado.
-- **Concreción**: Siempre que sea posible, usar ejemplos de situaciones reales que vive el cliente.
+- **Concreción**: Usar ejemplos de situaciones reales que vive el {tipo_cliente}.
 - **Coherencia**: El mensaje debe ser el mismo en todos los canales activos.
-- **Empatía**: Empezar por el problema del cliente, no por las características del servicio.
+- **Empatía**: Empezar por el problema del {tipo_cliente}, no por las características de la {tipo_oferta}.
 
 ## Información faltante para fortalecer la comunicación
-- Testimonios reales de clientes satisfechos.
+- Testimonios reales de clientes o usuarios satisfechos.
 - Casos de estudio con datos concretos (antes vs después).
 - Preguntas frecuentes recolectadas de interacciones reales.
-- Ejemplos visuales del proceso o resultado de '{oferta_principal}'.
+- Ejemplos visuales de '{oferta_principal}'.
 
 ## Riesgos de comunicación
 - **Mensaje Genérico**: Que el cliente sienta que la comunicación sirve para cualquier negocio.
 - **Promesa Excesiva**: Generar expectativas que la oferta no pueda cumplir.
-- **Desconexión con el problema**: Hablar demasiado de la oferta y poco del problema '{problema_principal}'.
+- **Desconexión con el problema**: Hablar demasiado de la {tipo_oferta} y poco del problema '{problema_principal}'.
 
 ## Recomendación para la siguiente fase
 08_plan_accion_90_dias
