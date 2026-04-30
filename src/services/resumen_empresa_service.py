@@ -137,6 +137,13 @@ El plan de 90 días se divide en tres etapas críticas:
 - **Ventas**: Los leads generados por marketing deben ser procesados por un flujo coherente con la propuesta de valor.
 - **Recursos Humanos**: Evaluar si el equipo actual puede ejecutar las acciones de marketing o si requiere apoyo externo.
 
+## Integridad de Datos (v1.2)
+1. **Datos confirmados usados**: {nombre}, {tipo}, {oferta}, {cliente}, {problema}.
+2. **Supuestos aplicados**: Perfil de marketing {profile['marketing_profile']} aplicado como hipótesis base; presupuesto {presupuesto} considerado como rango operativo.
+3. **Datos faltantes**: Zona geográfica (validar consistencia), capacidad operativa detallada y recursos internos específicos.
+4. **Impacto de los vacíos**: La falta de detalle en recursos internos puede retrasar el inicio de la Fase de Preparación.
+5. **Recomendación de validación**: El usuario debe confirmar la disponibilidad real de tiempo y presupuesto antes de activar la Fase de Activación (Día 31).
+
 ## Recomendación para la siguiente fase
 12_auditoria_final
 """
