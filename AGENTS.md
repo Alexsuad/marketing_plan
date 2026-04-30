@@ -38,9 +38,20 @@ Las instancias de proyecto viven en: `projects/`
 ## 3. Convenciones técnicas del repositorio
 
 **Carpetas del sistema (Base):**
-`src/`, `project_template/`, `docs/`, `tests/`, `system/`, `agents/`, `skills/`.
+`src/`, `project_template/`, `docs/`, `tests/`, `system/`, `agents/`, `.claude/skills/`.
 
-**Estado de la capa agéntica:** Estructura inicial creada (v1.0).
+**Nota sobre skills:**
+Las skills operativas del sistema viven en `.claude/skills/<nombre>/SKILL.md` (13 skills).
+Esta ubicación es parte estructural del repositorio y está bajo control de versiones.
+La carpeta `skills/` en la raíz es documental/legada — no crear nuevas skills allí.
+
+**Banco de validación local:**
+`projects/` contiene proyectos para pruebas end-to-end locales.
+No entra en el ZIP de distribución. No se sube al repositorio remoto.
+
+**Historial interno:**
+`docs/archive/` contiene historiales de sesiones internas.
+No entra en el ZIP de distribución.
 
 **No usar:**
 `app/`, `outputs/versiones/`, `outputs/auditorias/`.
@@ -90,11 +101,31 @@ Los cambios de impacto alto requieren aprobación explícita del usuario antes d
 **Agentes previstos:**
 `orquestador_plan_marketing`, `investigador_marketing`, `estratega_marketing`, `redactor_marketing`, `analista_metricas`, `auditor_plan_marketing`.
 
-**Skills previstas:**
+**Skills operativas (13 — en `.claude/skills/`):**
 `skill_intake_brief`, `skill_diagnostico_marketing`, `skill_cliente_objetivo`, `skill_propuesta_valor`, `skill_analisis_competencia`, `skill_matriz_canales`, `skill_estrategia_comunicacion`, `skill_plan_accion`, `skill_presupuesto_marketing`, `skill_kpis`, `skill_resumen_plan_empresa`, `skill_auditoria_coherencia`, `skill_change_request`.
 
 No crear agentes nuevos sin justificar por qué no basta con una skill.
 No crear skills nuevas sin definir entrada, proceso, salida y validación.
+Toda skill nueva debe ir a `.claude/skills/<nombre>/SKILL.md`, no a `skills/`.
+
+## 8.1 Modelos de negocio soportados
+
+El sistema adapta canales, tono, KPIs y presupuesto según el modelo detectado:
+
+| Perfil del resolver | Descripción |
+|---------------------|-------------|
+| `ecommerce_transaccional` | Tienda online D2C — foco en conversión, ROAS, checkout |
+| `b2c_producto_ecommerce` | Venta directa de productos físicos por canal digital |
+| `b2b_producto_industrial` | Productos/maquinaria a empresas — catálogos, ferias, suministro |
+| `retail_fisico` | Tienda física — tráfico peatonal, visibilidad local |
+| `b2b_consultivo` | Servicios profesionales a empresas — ciclo largo, autoridad |
+| `b2c_local_servicios` | Servicios de cercanía — zona geográfica, reserva, reseñas |
+| `educativo_formativo` | Academias y cursos — demostración de valor, matrícula |
+| `hibrido_producto_servicio` | Producto + contrato de servicio recurrente (mantenimiento, SLA) |
+| `estrategia_general_prudente` | Fallback — solo para briefs genuinamente ambiguos |
+
+El perfil `estrategia_general_prudente` no debe activarse para negocios con modelo evidente.
+Si se activa para un brief claro, es un fallo del resolver que debe corregirse.
 
 ## 9. Aprovechamiento de Antigravity
 

@@ -13,9 +13,13 @@ wheels/
 # Ignorar instancias de proyectos (datos de clientes)
 projects/
 
-# IA & Metadata
-.claude/
+# IA & Metadata — excluir metadata local pero preservar skills operativas
+.claude/*
+!.claude/skills/
+!.claude/skills/**
 .gemini/
+.codex
+.codex/
 
 # Binarios y archivos temporales
 *.zip

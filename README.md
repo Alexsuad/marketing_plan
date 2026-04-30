@@ -177,14 +177,16 @@ Estructura esperada:
 marketing_plan_agent_base/
 ├── README.md
 ├── AGENTS.md
+├── .claude/
+│   └── skills/         # Skills operativas del sistema (13 skills — parte del repo)
 ├── docs/
-├── system/             # Estructura inicial creada: reglas y plantillas
-├── agents/             # Estructura inicial creada: roles de agentes
-├── skills/             # Estructura inicial creada: habilidades
+├── system/             # Reglas, gates y workflows del sistema
+├── agents/             # Definición de agentes
+├── skills/             # [DOCUMENTAL] Carpeta legada — ver .claude/skills/ para uso operativo
 ├── src/
 ├── tests/
 ├── project_template/
-├── projects/
+├── projects/           # Banco local de proyectos (no se distribuye ni entra en ZIP)
 ├── pyproject.toml
 └── .gitignore
 ```
@@ -226,17 +228,32 @@ analista_metricas
 auditor_plan_marketing
 ```
 
-### 7.4 `skills/`
+### 7.4 `.claude/skills/` — Skills operativas del sistema
 
-Contiene skills reutilizables.
+Las 13 skills operativas del MVP viven en `.claude/skills/`, no en `skills/`.
 
-Cada skill debe vivir en una carpeta propia con su archivo `SKILL.md`.
-
-Ejemplo:
+Esta ubicación es parte estructural del repositorio y está bajo control de versiones
+(a diferencia del resto de `.claude/`, que es metadata local).
 
 ```text
-skills/skill_intake_brief/SKILL.md
+.claude/skills/
+├── skill_intake_brief/SKILL.md
+├── skill_diagnostico_marketing/SKILL.md
+├── skill_cliente_objetivo/SKILL.md
+├── skill_propuesta_valor/SKILL.md
+├── skill_analisis_competencia/SKILL.md
+├── skill_matriz_canales/SKILL.md
+├── skill_estrategia_comunicacion/SKILL.md
+├── skill_plan_accion/SKILL.md
+├── skill_presupuesto_marketing/SKILL.md
+├── skill_kpis/SKILL.md
+├── skill_resumen_plan_empresa/SKILL.md
+├── skill_auditoria_coherencia/SKILL.md
+└── skill_change_request/SKILL.md
 ```
+
+La carpeta `skills/` en la raíz del repositorio es documental/legada.
+No crear nuevas skills allí. Toda skill nueva debe ir a `.claude/skills/<nombre>/SKILL.md`.
 
 ### 7.5 `src/`
 
@@ -265,11 +282,23 @@ Esta carpeta no debe tener datos reales.
 
 ### 7.7 `projects/`
 
-Contiene proyectos generados localmente.
+Contiene proyectos generados localmente. Funciona como banco de validación para
+pruebas del pipeline end-to-end con distintos modelos de negocio.
 
-Esta carpeta debe estar ignorada por Git.
+**Reglas**:
+- Ignorada por Git en su totalidad.
+- No entra en el ZIP de distribución (v1.1 o cualquier versión).
+- No debe contener datos reales de clientes en el repositorio compartido.
+- Cada proyecto nuevo se crea desde `project_template/`, no copiando uno existente.
 
-No se debe subir al repositorio si contiene datos reales.
+### 7.8 `docs/archive/`
+
+Contiene historiales internos de sesiones de desarrollo.
+
+**Reglas**:
+- Es historial interno, no parte del sistema distribuible.
+- No entra en el ZIP de distribución.
+- Se mantiene en git como registro, pero no se comparte con usuarios finales.
 
 ---
 
@@ -325,13 +354,15 @@ Guarda registros técnicos o funcionales de ejecución.
 
 Para evitar sesgos (especialmente el de venta consultiva/B2B), el sistema clasifica el negocio en una de estas categorías antes de generar las fases tácticas:
 
-- **`b2c_producto_ecommerce`**: Negocios de venta directa de productos físicos con envío, enfocados en conversión digital y ROAS.
-- **`b2b_producto_industrial`**: Venta de productos a otras empresas, basada en especificaciones técnicas, catálogos y logística de suministro.
-- **`retail_fisico`**: Negocios con sede física y venta de productos, enfocados en tráfico local y visibilidad en punto de venta.
-- **`b2b_consultivo`**: Servicios profesionales o industriales complejos dirigidos a empresas. Ciclos de venta largos basados en autoridad.
-- **`b2c_local_servicios`**: Negocios de cercanía (estética, salud, etc.) orientados a servicios personales en una zona geográfica.
-- **`educativo_formativo`**: Academias y servicios de capacitación.
-- **`estrategia_general_prudente`**: Perfil de reserva (fallback). Se activa si hay ambigüedad. Se centra en validación manual.
+- **`ecommerce_transaccional`**: Tiendas online D2C con alto volumen transaccional. Foco en conversión, ROAS, checkout y recuperación de carrito.
+- **`b2c_producto_ecommerce`**: Venta directa de productos físicos al consumidor final por canales digitales. Perfil complementario al anterior.
+- **`b2b_producto_industrial`**: Venta de productos, maquinaria o insumos a otras empresas. Basado en catálogos, ferias y contratos de suministro.
+- **`retail_fisico`**: Negocios con sede física y venta de productos en local. Foco en tráfico peatonal y visibilidad geográfica.
+- **`b2b_consultivo`**: Servicios profesionales o técnicos complejos dirigidos a empresas. Ciclos de venta largos basados en autoridad y confianza.
+- **`b2c_local_servicios`**: Negocios de cercanía (estética, salud, talleres, etc.) orientados a servicios personales en zona geográfica delimitada.
+- **`educativo_formativo`**: Academias, cursos y servicios de capacitación. Foco en demostración de valor antes de la venta.
+- **`hibrido_producto_servicio`**: Venta de un activo físico acompañado de contrato de servicio recurrente (mantenimiento, soporte, SLA).
+- **`estrategia_general_prudente`**: Perfil de reserva (fallback). Se activa únicamente si el brief es ambiguo o con información insuficiente para clasificar. No debe activarse para negocios con modelo evidente.
 
 ### Lógica de clasificación
 - El resolver analiza el texto de los campos: `tipo_negocio`, `oferta_principal`, `cliente_objetivo` y `problema_que_resuelve`.
@@ -690,16 +721,22 @@ El versionado y changelog también se ampliarán en las siguientes fases.
 Estado actual:
 
 ```text
-pipeline_12_fases_funcional_refactorizado_con_tests_base
+correccion_lean_multimodelo_en_curso
 ```
 
-Logros del estado actual:
+Logros confirmados:
 - Pipeline de 12 fases implementado y funcional.
 - Validadores de estructura base y de proyectos operativos.
 - Brief validator con control de campos obligatorios.
 - Generación completa de documentos Markdown (01 a 12).
-- Resolver de perfiles dinámico (B2B, B2C, Educativo, General).
-- Reutilización validada con 4 casos de prueba distintos.
+- Resolver de perfiles dinámico con 9 modelos de negocio.
+- 13 skills operativas en `.claude/skills/`.
+- Reutilización validada con múltiples modelos de negocio.
+
+En corrección activa (v1.1):
+- Resolver: cobertura de briefs D2C y ecommerce premium.
+- Skills: eliminación de sesgo de servicios.
+- Terminología: aplicación por modelo en outputs.
 
 ---
 
@@ -765,7 +802,8 @@ Durante la auditoría de la base funcional, se han identificado los siguientes p
 - Añadir tests del pipeline completo por perfil.
 - Preparar una prueba con un brief real controlado.
 - Documentar regla: si se modifica markdown_utils.py o project_io.py, ejecutar pruebas y pipeline completo de control.
-- Migrar `system/`, `agents/` y `skills/` a implementación de contenido real (En proceso).
+- Las 13 skills están implementadas en `.claude/skills/` (migración completada).
+- Corrección multimodelo activa: sesgo de servicios, terminología por modelo, resolver ecommerce D2C.
 
 ---
 
