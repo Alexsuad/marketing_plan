@@ -38,23 +38,21 @@ Las instancias de proyecto viven en: `projects/`
 ## 3. Convenciones técnicas del repositorio
 
 **Carpetas del sistema (Base):**
-`src/`, `project_template/`, `docs/`, `tests/`, `system/`, `agents/`, `.claude/skills/`.
+`src/`, `project_template/`, `docs/00_base_sistema/`, `docs/01_estandares/`, `docs/02_manual_operativo/`, `tests/`, `system/`, `agents/`, `.claude/skills/`.
 
 **Nota sobre skills:**
 Las skills operativas del sistema viven en `.claude/skills/<nombre>/SKILL.md` (13 skills).
 Esta ubicación es parte estructural del repositorio y está bajo control de versiones.
-La carpeta `skills/` en la raíz es documental/legada — no crear nuevas skills allí.
 
-**Banco de validación local:**
-`projects/` contiene proyectos para pruebas end-to-end locales.
-No entra en el ZIP de distribución. No se sube al repositorio remoto.
+**Área de Trabajo (Workspace):**
+`workspace/` contiene inputs, reportes temporales y borradores.
+`projects/` contiene los proyectos activos para pruebas locales.
 
-**Historial interno:**
-`docs/archive/` contiene historiales de sesiones internas.
-No entra en el ZIP de distribución.
+**Historial y Reportes:**
+`workspace/reports/` contiene auditorías, historial de sesiones e hitos de validación.
+`workspace/exports/` contiene los ZIPs generados.
 
-**No usar:**
-`app/`, `outputs/versiones/`, `outputs/auditorias/`.
+Todo el contenido de `workspace/` y `projects/` está ignorado por Git y no forma parte del sistema base.
 
 **El punto de entrada CLI es:**
 `uv run python -m src.main`

@@ -1,4 +1,4 @@
-# File: docs/plans/estandar_funcional_skills_marketing_multimodelo.md
+# File: docs/01_estandares/estandar_funcional_skills_marketing_multimodelo.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Definir el estándar funcional para las skills de marketing
 # en un entorno multimodelo para asegurar coherencia y calidad.

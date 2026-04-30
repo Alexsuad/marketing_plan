@@ -27,7 +27,7 @@ Aplica en la transición entre lotes del plan de implementación (Ej. Lote 4 -> 
 - **Incorrecto:** "He terminado los workflows, voy a empezar a escribir las reglas ahora mismo."
 
 ## 6. Evidencia esperada
-- Documento de auditoría de lote en `docs/audits/`.
+- Documento de auditoría de lote en `workspace/reports/audits/`.
 
 ## 7. Estado de incumplimiento
 `error_avance_sin_auditoria_de_lote`

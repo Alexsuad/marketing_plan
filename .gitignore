@@ -5,21 +5,29 @@ build/
 dist/
 wheels/
 *.egg-info
+.pytest_cache/
 
 # Virtual environments
-.venv
+.venv/
 .env
 
-# Ignorar instancias de proyectos (datos de clientes)
+# Workspace Variable (Taller Local)
+# Se ignoran los contenidos para no versionar datos de proyectos o temporales
+workspace/inputs/
+workspace/projects/
+workspace/outputs/
+workspace/reports/
+workspace/exports/
+workspace/sandbox/
 projects/
 
-# IA & Metadata — excluir metadata local pero preservar skills operativas
+# IA & Metadata
+# Se excluye la metadata local pero se PRESERVAN las skills operativas (el corazón del sistema)
 .claude/*
 !.claude/skills/
 !.claude/skills/**
 .gemini/
 .codex
-.codex/
 
 # Binarios y archivos temporales
 *.zip

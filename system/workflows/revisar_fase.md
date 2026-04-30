@@ -34,7 +34,7 @@
 ---
 
 ## Control y Salida
-- **Archivos que puede tocar:** `docs/audits/` (informes de auditoría), `project_config.json` (estado de fase).
+- **Archivos que puede tocar:** `workspace/reports/audits/` (informes de auditoría), `project_config.json` (estado de fase).
 - **Archivos que no debe tocar:** Los documentos originales de la fase (solo los lee).
 - **Evidencia requerida:** Informe de auditoría con veredicto claro.
 - **Salida esperada:** Fase validada o lista de observaciones.

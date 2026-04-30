@@ -798,35 +798,40 @@ Durante la auditoría de la base funcional, se han identificado los siguientes p
 
 ---
 
-## 23. Próximos pasos recomendados
-- Añadir tests del pipeline completo por perfil.
-- Preparar una prueba con un brief real controlado.
-- Documentar regla: si se modifica markdown_utils.py o project_io.py, ejecutar pruebas y pipeline completo de control.
-- Las 13 skills están implementadas en `.claude/skills/` (migración completada).
-- Corrección multimodelo activa: sesgo de servicios, terminología por modelo, resolver ecommerce D2C.
+## 23. Arquitectura Lean 5S (Organización del Repositorio)
+
+El repositorio sigue un estándar de organización **5S** para separar el código del sistema de los datos variables de trabajo:
+
+### A. Sistema Fijo (Núcleo)
+*Versionado y empaquetado en el ZIP base.*
+- `src/`: Lógica de negocio y servicios Python.
+- `system/`: Reglas, gates y workflows multimodelo.
+- `.claude/skills/`: Skills operativas agénticas.
+- `agents/`: Definiciones de agentes.
+- `project_template/`: Estructura base para nuevos planes.
+- `docs/00_base_sistema/`, `01_estandares/`, `02_manual_operativo/`: Documentación viva.
+
+### B. Workspace Variable (Taller)
+*Ignorado por Git y excluido del ZIP limpio.*
+- `workspace/`: Inputs, borradores, sandbox y reportes de sesión.
+- `workspace/reports/`: Auditorías pasadas e historial de validaciones.
+- `workspace/exports/`: Versiones exportadas (ZIPs).
+- `projects/`: Instancias activas de proyectos para pruebas locales.
 
 ---
 
-## 24. Estado recomendado antes de continuar
+## 24. Estado actual y Validación
 
-Antes de avanzar a la siguiente fase, el repositorio debe cumplir:
-
-- `main.py` raíz eliminado,
-- `src/main.py` como punto de entrada real,
-- `project_template/` portable,
-- `outputs/versions/` y `outputs/audits/` unificados,
-- `projects/` ignorado por Git,
-- proyecto de prueba creado correctamente,
-- documentación alineada con `src/`,
-- y sin datos reales dentro del repositorio base.
+El repositorio ha sido estabilizado bajo el estándar multimodelo:
+- **Lógica Multimodelo**: 13 skills y 5 gates operativos.
+- **Limpieza 5S**: Estructura organizada y libre de basura técnica.
+- **Punto de Entrada**: `uv run python -m src.main`.
 
 ---
 
 ## 25. Licencia
 
-Licencia pendiente de definir.
-
-Antes de publicar o compartir el repositorio, se debe decidir el tipo de licencia.
+Licencia pendiente de definir. Antes de publicar o compartir el repositorio, se debe decidir el tipo de licencia.
 
 ---
 
