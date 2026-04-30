@@ -1,0 +1,22 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+.env
+
+# Ignorar instancias de proyectos (datos de clientes)
+projects/
+
+# IA & Metadata
+.claude/
+.gemini/
+
+# Binarios y archivos temporales
+*.zip
+*.log

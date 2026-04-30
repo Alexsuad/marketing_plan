@@ -1,0 +1,802 @@
+# Marketing Plan Agent Base
+
+Sistema agéntico para crear, revisar y actualizar Planes de Marketing para cualquier tipo de negocio (productos, servicios, ecommerce, retail, B2B, B2C, educativos o híbridos).
+
+Este repositorio funciona como una base reutilizable. Su objetivo es permitir que cada nuevo Plan de Marketing se trabaje en una instancia limpia, separada del repositorio principal, evitando contaminación entre proyectos, pérdida de contexto o mezcla de información de distintos negocios.
+
+---
+
+## 1. Qué es este proyecto
+
+`marketing_plan_agent_base` es un sistema diseñado para ayudar a construir Planes de Marketing de forma ordenada, trazable y validada.
+
+No es una herramienta para publicar automáticamente en redes sociales, lanzar campañas publicitarias o gestionar un CRM.
+
+La primera versión se enfoca en algo más básico y más importante:
+
+```text
+crear una estructura limpia,
+recoger contexto del negocio,
+generar documentos del Plan de Marketing,
+validar fases,
+registrar cambios,
+versionar el plan,
+y mantener separado cada proyecto.
+```
+
+El sistema es agnóstico al tipo de negocio, permitiendo modelar empresas de productos, servicios, ecommerce o modelos híbridos.
+
+---
+
+## 2. Objetivo del MVP
+
+El MVP busca validar el flujo documental y técnico antes de construir una interfaz compleja o integrar herramientas externas.
+
+La primera versión debe permitir:
+
+- crear un nuevo proyecto desde una plantilla limpia,
+- guardar información inicial del negocio,
+- trabajar el Plan de Marketing por fases,
+- generar documentos Markdown,
+- validar estructura y archivos mínimos,
+- registrar cambios,
+- crear versiones,
+- y mantener el repositorio base limpio.
+
+La prioridad del MVP no es automatizar todo, sino asegurar que el sistema sea confiable, ordenado y reutilizable.
+
+---
+
+## 3. Qué problema resuelve
+
+Cuando se trabaja con IA para crear documentos estratégicos, suelen aparecer varios problemas:
+
+- se mezcla información de distintos proyectos,
+- se generan documentos largos pero poco accionables,
+- se salta directamente a contenidos o redes sociales sin diagnóstico previo,
+- se inventan datos no confirmados,
+- no queda claro qué cambió entre versiones,
+- no existe una separación entre sistema base y proyecto real,
+- y no hay validaciones antes de avanzar.
+
+Este repositorio busca evitar esos problemas mediante:
+
+- estructura de carpetas clara,
+- agentes con responsabilidades separadas,
+- skills reutilizables,
+- gates de validación,
+- versionado,
+- changelog,
+- auditoría,
+- y reglas de repositorio limpio.
+
+---
+
+## 4. Qué hace el sistema
+
+El sistema permite construir un Plan de Marketing mediante un flujo por fases.
+
+El flujo previsto es:
+
+```text
+01_intake_y_brief
+02_diagnostico_marketing
+03_cliente_objetivo_y_segmentos
+04_propuesta_valor_y_posicionamiento
+05_analisis_competencia
+06_matriz_canales_marketing
+07_estrategia_comunicacion
+08_plan_accion_90_dias
+09_presupuesto_marketing
+10_kpis_y_medicion
+11_resumen_para_plan_empresa
+12_auditoria_final
+```
+
+Cada fase debe generar un documento propio dentro de la carpeta del proyecto.
+
+Ejemplo:
+
+```text
+projects/nombre_del_proyecto/outputs/plan_actual/01_brief_negocio_validado.md
+```
+
+---
+
+## 5. Qué no hace el MVP
+
+El MVP no incluye todavía:
+
+- publicación automática en redes sociales,
+- programación de contenidos,
+- generación automática de imágenes,
+- conexión con Notion,
+- task bot,
+- MCP,
+- CRM,
+- dashboards avanzados,
+- Google Analytics,
+- Google Ads,
+- LinkedIn Ads,
+- Mailchimp,
+- Zapier,
+- base de datos,
+- aplicación web,
+- multiusuario,
+- permisos por roles,
+- ni exportación avanzada a PDF o DOCX.
+
+Estas funciones pueden evaluarse en fases futuras, cuando el flujo base esté validado.
+
+---
+
+## 6. Principio de arquitectura
+
+El sistema trabaja con dos niveles separados:
+
+```text
+repositorio_base
+instancias_de_proyecto
+```
+
+El repositorio base contiene:
+
+- documentación,
+- reglas,
+- agentes,
+- skills,
+- gates,
+- workflows,
+- plantillas,
+- código Python,
+- pruebas,
+- y plantilla base para nuevos proyectos.
+
+Cada instancia de proyecto contiene:
+
+- contexto del negocio,
+- outputs del Plan de Marketing,
+- versiones,
+- changelog,
+- auditorías,
+- y logs.
+
+Regla principal:
+
+```text
+El repositorio base no debe contener datos reales de clientes ni outputs de proyectos concretos.
+```
+
+---
+
+## 7. Estructura general del repositorio
+
+Estructura esperada:
+
+```text
+marketing_plan_agent_base/
+├── README.md
+├── AGENTS.md
+├── docs/
+├── system/             # Estructura inicial creada: reglas y plantillas
+├── agents/             # Estructura inicial creada: roles de agentes
+├── skills/             # Estructura inicial creada: habilidades
+├── src/
+├── tests/
+├── project_template/
+├── projects/
+├── pyproject.toml
+└── .gitignore
+```
+
+### 7.1 `docs/`
+
+Contiene la documentación del sistema.
+
+Aquí viven los documentos de planificación, arquitectura, decisiones, flujo, gates, versionado y criterios de hecho.
+
+No debe contener Planes de Marketing reales.
+
+### 7.2 `system/`
+
+Contiene reglas, workflows, gates y plantillas del sistema.
+
+Estructura prevista:
+
+```text
+system/
+├── rules/
+├── workflows/
+├── gates/
+└── templates/
+```
+
+### 7.3 `agents/`
+
+Contiene la definición de los agentes del sistema.
+
+Agentes iniciales previstos:
+
+```text
+orquestador_plan_marketing
+investigador_marketing
+estratega_marketing
+redactor_marketing
+analista_metricas
+auditor_plan_marketing
+```
+
+### 7.4 `skills/`
+
+Contiene skills reutilizables.
+
+Cada skill debe vivir en una carpeta propia con su archivo `SKILL.md`.
+
+Ejemplo:
+
+```text
+skills/skill_intake_brief/SKILL.md
+```
+
+### 7.5 `src/`
+
+Contiene el código Python del sistema.
+
+Estructura inicial prevista:
+
+```text
+src/
+├── main.py
+├── config/
+├── core/
+│   └── marketing_profile_resolver.py  # Resolución de perfil de negocio (B2B, B2C, etc.)
+├── services/                          # Lógica de las 12 fases
+├── validators/                        # Validadores de estructura y brief
+└── utils/
+```
+
+El archivo `marketing_profile_resolver.py` es una pieza central: permite que las Fases 06 a 12 adapten dinámicamente canales, tono, tácticas, presupuesto y KPIs según el tipo de negocio detectado.
+
+### 7.6 `project_template/`
+
+Contiene la plantilla limpia que se copia cada vez que se crea un nuevo proyecto.
+
+Esta carpeta no debe tener datos reales.
+
+### 7.7 `projects/`
+
+Contiene proyectos generados localmente.
+
+Esta carpeta debe estar ignorada por Git.
+
+No se debe subir al repositorio si contiene datos reales.
+
+---
+
+## 8. Estructura de un proyecto generado
+
+Cada proyecto generado debe tener una estructura similar a esta:
+
+```text
+projects/nombre_del_proyecto/
+├── project_config.json
+├── context/
+│   ├── empresa.md
+│   ├── servicios.md
+│   ├── cliente_objetivo.md
+│   ├── contexto_mercado.md
+│   ├── canales_actuales.md
+│   └── restricciones.md
+├── outputs/
+│   ├── plan_actual/
+│   ├── versions/
+│   ├── changelog/
+│   └── audits/
+└── logs/
+```
+
+### 8.1 `context/`
+
+Guarda información del negocio.
+
+### 8.2 `outputs/plan_actual/`
+
+Guarda la versión activa del Plan de Marketing.
+
+### 8.3 `outputs/versions/`
+
+Guarda versiones cerradas o anteriores.
+
+### 8.4 `outputs/changelog/`
+
+Guarda registros de cambios.
+
+### 8.5 `outputs/audits/`
+
+Guarda auditorías parciales o finales.
+
+### 8.6 `logs/`
+
+Guarda registros técnicos o funcionales de ejecución.
+
+---
+
+## 9. Sistema de perfiles de marketing
+
+Para evitar sesgos (especialmente el de venta consultiva/B2B), el sistema clasifica el negocio en una de estas categorías antes de generar las fases tácticas:
+
+- **`b2c_producto_ecommerce`**: Negocios de venta directa de productos físicos con envío, enfocados en conversión digital y ROAS.
+- **`b2b_producto_industrial`**: Venta de productos a otras empresas, basada en especificaciones técnicas, catálogos y logística de suministro.
+- **`retail_fisico`**: Negocios con sede física y venta de productos, enfocados en tráfico local y visibilidad en punto de venta.
+- **`b2b_consultivo`**: Servicios profesionales o industriales complejos dirigidos a empresas. Ciclos de venta largos basados en autoridad.
+- **`b2c_local_servicios`**: Negocios de cercanía (estética, salud, etc.) orientados a servicios personales en una zona geográfica.
+- **`educativo_formativo`**: Academias y servicios de capacitación.
+- **`estrategia_general_prudente`**: Perfil de reserva (fallback). Se activa si hay ambigüedad. Se centra en validación manual.
+
+### Lógica de clasificación
+- El resolver analiza el texto de los campos: `tipo_negocio`, `oferta_principal`, `cliente_objetivo` y `problema_que_resuelve`.
+- **Umbral**: Requiere al menos 2 coincidencias de palabras clave para asignar un perfil.
+- **Desempate**: Si hay un empate entre perfiles o no se alcanza el umbral, se asigna `estrategia_general_prudente` para garantizar una estrategia conservadora.
+
+---
+
+## 10. Contrato mínimo del brief
+
+Para que el sistema pueda avanzar hacia el diagnóstico, el brief inicial debe tener campos mínimos.
+
+Campos obligatorios:
+
+| Campo | Obligatorio | Ejemplo | Acción si falta |
+|---|---:|---|---|
+| `nombre_negocio` | Sí | `Belleza Serena` | Bloquea |
+| `tipo_negocio` | Sí | `Ecommerce de calzado` / `Consultoría IT` | Bloquea |
+| `oferta_principal` | Sí | `Zapatillas de running` / `Migración a Cloud` | Bloquea |
+| `cliente_objetivo` | Sí | `Mujeres de 25 a 55 años en zona urbana cercana` | Bloquea |
+| `problema_que_resuelve` | Sí | `Falta de tiempo y confianza para cuidar la piel` | Bloquea |
+| `objetivo_principal` | Sí | `Captar 20 reservas mensuales` | Bloquea |
+| `presupuesto_marketing` | No | `300 EUR/mes` | Observación |
+
+Si falta un campo obligatorio, el sistema no debe inventarlo.
+
+Debe marcar el brief como incompleto y pedir la información faltante.
+
+---
+
+## 11. Agentes del sistema
+
+El MVP define seis agentes iniciales.
+
+### 10.1 `orquestador_plan_marketing`
+
+Coordina el flujo, activa fases, controla estados y asegura que no se salten validaciones.
+
+### 10.2 `investigador_marketing`
+
+Analiza contexto, mercado, competencia y datos disponibles.
+
+No decide la estrategia final.
+
+### 10.3 `estratega_marketing`
+
+Convierte investigación en decisiones de marketing.
+
+Define cliente prioritario, propuesta de valor, canales y plan de acción.
+
+### 10.4 `redactor_marketing`
+
+Convierte decisiones estratégicas en documentos claros y útiles.
+
+No cambia la estrategia sin declarar impacto.
+
+### 10.5 `analista_metricas`
+
+Define KPIs, medición y criterios de seguimiento.
+
+Evita métricas de vanidad.
+
+### 10.6 `auditor_plan_marketing`
+
+Revisa coherencia, riesgos, información faltante y calidad del plan.
+
+Puede bloquear el cierre si detecta problemas críticos.
+
+---
+
+## 12. Skills iniciales
+
+Skills previstas para el MVP:
+
+```text
+skill_intake_brief
+skill_diagnostico_marketing
+skill_cliente_objetivo
+skill_propuesta_valor
+skill_analisis_competencia
+skill_matriz_canales
+skill_estrategia_comunicacion
+skill_plan_accion
+skill_presupuesto_marketing
+skill_kpis
+skill_resumen_plan_empresa
+skill_auditoria_coherencia
+skill_change_request
+```
+
+Cada skill debe tener:
+
+- propósito,
+- cuándo usarla,
+- entradas necesarias,
+- proceso,
+- salida esperada,
+- gate relacionado,
+- criterios de insuficiencia,
+- y límites.
+
+---
+
+## 13. Gates de validación
+
+Gates previstos:
+
+```text
+gate_brief_minimo
+gate_no_invencion
+gate_coherencia_cliente_propuesta
+gate_canales_justificados
+gate_plan_accion_realista
+gate_kpis_medibles
+gate_resumen_plan_empresa
+gate_auditoria_final
+gate_impacto_cambio
+```
+
+Un gate puede devolver:
+
+```text
+aprobado
+aprobado_con_observaciones
+bloqueado
+```
+
+Regla importante:
+
+```text
+Documento generado no significa fase aprobada.
+```
+
+---
+
+## 14. Sistema de cambios y versionado
+
+El Plan de Marketing se considera un documento vivo.
+
+Por eso, los cambios deben procesarse de forma controlada.
+
+Tipos de impacto:
+
+```text
+impacto_bajo
+impacto_medio
+impacto_alto
+```
+
+Flujo de cambio:
+
+```text
+solicitud_de_cambio
+↓
+clasificacion_de_impacto
+↓
+identificacion_de_documentos_afectados
+↓
+aprobacion_si_corresponde
+↓
+actualizacion_controlada
+↓
+auditoria_de_coherencia
+↓
+registro_en_changelog
+↓
+creacion_de_nueva_version
+```
+
+Los cambios de impacto alto requieren aprobación explícita antes de modificar el plan.
+
+---
+
+## 15. Uso de IA y Python en el MVP
+
+El MVP usa un modo manual-asistido.
+
+### 14.1 Python
+
+Python se encarga de lo determinista:
+
+- crear carpetas,
+- copiar plantillas,
+- validar estructura,
+- verificar archivos,
+- registrar cambios,
+- crear versiones,
+- prevenir sobrescrituras,
+- y mantener proyectos separados.
+
+### 14.2 IA en Antigravity
+
+La IA apoya tareas interpretativas y de redacción:
+
+- analizar contexto,
+- redactar documentos,
+- formular propuesta de valor,
+- sugerir canales,
+- crear diagnóstico,
+- resumir para Plan de Empresa,
+- y apoyar auditorías cualitativas.
+
+La IA no debe manejar sola:
+
+- rutas,
+- nombres de archivos,
+- versionado,
+- estructura,
+- ni limpieza del repositorio.
+
+---
+
+## 16. Instalación inicial
+
+Este proyecto usa `uv` para gestionar el entorno Python.
+
+Inicializar entorno:
+
+```bash
+uv sync
+```
+
+Si el proyecto todavía no tiene entorno creado, ejecutar:
+
+```bash
+uv init .
+```
+
+Luego sincronizar:
+
+```bash
+uv sync
+```
+
+> Nota: no se recomienda instalar dependencias manualmente con `pip` si el proyecto está usando `uv`.
+
+---
+
+## 17. Comandos disponibles
+
+### 16.1 Comandos de Proyecto y Estructura
+
+- `create-project`: Crea un nuevo proyecto desde la plantilla.
+  ```bash
+  uv run python -m src.main create-project --name "Mi Proyecto"
+  ```
+- `validate-base-structure`: Valida la estructura de la plantilla base.
+  ```bash
+  uv run python -m src.main validate-base-structure
+  ```
+- `validate-project`: Valida la estructura de un proyecto instanciado.
+  ```bash
+  uv run python -m src.main validate-project --name "Mi Proyecto"
+  ```
+- `validate-brief`: Valida que el brief del proyecto esté completo.
+  ```bash
+  uv run python -m src.main validate-brief --name "Mi Proyecto"
+  ```
+
+### 16.2 Comandos de Generación de Fases (Pipeline)
+
+- `generate-brief-output`: Genera el documento formal de brief validado (Fase 01).
+- `generate-diagnostico-output`: Genera el documento de diagnóstico inicial (Fase 02).
+- `generate-cliente-output`: Genera el documento de cliente y segmentos (Fase 03).
+- `generate-propuesta-valor-output`: Genera el documento de propuesta de valor (Fase 04).
+- `generate-competencia-output`: Genera el documento de análisis de competencia (Fase 05).
+- `generate-canales-output`: Genera el documento de matriz de canales (Fase 06).
+- `generate-comunicacion-output`: Genera el documento de estrategia de comunicación (Fase 07).
+- `generate-plan-accion-output`: Genera el documento del plan de acción 90 días (Fase 08).
+- `generate-presupuesto-output`: Genera el documento de presupuesto de marketing (Fase 09).
+- `generate-kpis-output`: Genera el documento de KPIs y medición inicial (Fase 10).
+- `generate-resumen-empresa-output`: Genera el resumen ejecutivo para plan de empresa (Fase 11).
+- `generate-auditoria-output`: Genera la auditoría final del plan de marketing (Fase 12).
+
+### 16.3 Ejemplo de ejecución del pipeline completo
+
+```bash
+uv run python -m src.main create-project --name "Mi Proyecto"
+uv run python -m src.main validate-brief --name "Mi Proyecto"
+
+uv run python -m src.main generate-brief-output --name "Mi Proyecto"
+uv run python -m src.main generate-diagnostico-output --name "Mi Proyecto"
+uv run python -m src.main generate-cliente-output --name "Mi Proyecto"
+uv run python -m src.main generate-propuesta-valor-output --name "Mi Proyecto"
+uv run python -m src.main generate-competencia-output --name "Mi Proyecto"
+uv run python -m src.main generate-canales-output --name "Mi Proyecto"
+uv run python -m src.main generate-comunicacion-output --name "Mi Proyecto"
+uv run python -m src.main generate-plan-accion-output --name "Mi Proyecto"
+uv run python -m src.main generate-presupuesto-output --name "Mi Proyecto"
+uv run python -m src.main generate-kpis-output --name "Mi Proyecto"
+uv run python -m src.main generate-resumen-empresa-output --name "Mi Proyecto"
+uv run python -m src.main generate-auditoria-output --name "Mi Proyecto"
+```
+
+### 16.4 Pruebas (Testing)
+
+Para ejecutar las pruebas unitarias del sistema (como el resolver de perfiles):
+
+```bash
+uv run pytest
+```
+
+---
+
+## 18. Flujo recomendado de uso
+
+### Paso 1: Crear proyecto
+
+```bash
+uv run python -m src.main create-project --name "Mi Proyecto"
+```
+
+### Paso 2: Completar contexto
+
+Editar archivos dentro de:
+
+```text
+projects/mi_proyecto/context/
+```
+
+Archivos iniciales:
+
+```text
+empresa.md
+servicios.md
+cliente_objetivo.md
+contexto_mercado.md
+canales_actuales.md
+restricciones.md
+```
+
+### Paso 3: Generar o redactar documentos del plan
+
+Los documentos del Plan de Marketing deben guardarse en:
+
+```text
+projects/mi_proyecto/outputs/plan_actual/
+```
+
+### Paso 4: Validar la estructura y el brief antes de generar documentos
+
+```bash
+uv run python -m src.main validate-base-structure
+uv run python -m src.main validate-project --name "Mi Proyecto"
+uv run python -m src.main validate-brief --name "Mi Proyecto"
+```
+
+### Paso 5: Versionar y registrar cambios
+
+El versionado y changelog también se ampliarán en las siguientes fases.
+
+---
+
+## 19. Estado actual del desarrollo
+
+Estado actual:
+
+```text
+pipeline_12_fases_funcional_refactorizado_con_tests_base
+```
+
+Logros del estado actual:
+- Pipeline de 12 fases implementado y funcional.
+- Validadores de estructura base y de proyectos operativos.
+- Brief validator con control de campos obligatorios.
+- Generación completa de documentos Markdown (01 a 12).
+- Resolver de perfiles dinámico (B2B, B2C, Educativo, General).
+- Reutilización validada con 4 casos de prueba distintos.
+
+---
+
+## 20. Reglas importantes del repositorio
+
+1. No guardar datos reales en el repositorio base.
+2. No versionar `projects/` si contiene información real.
+3. No reutilizar un proyecto anterior para un negocio nuevo.
+4. Crear cada proyecto desde `project_template/`.
+5. No saltar gates.
+6. No asumir LinkedIn ni otra red social como canal obligatorio.
+7. No tratar el Plan de Marketing como documento cerrado.
+8. No usar MCP en el MVP.
+9. No crear interfaz gráfica antes de validar el flujo documental.
+10. No mezclar Plan de Marketing con Plan de Empresa completo.
+
+---
+
+## 21. Documentación principal
+
+La documentación base está en:
+
+```text
+docs/
+```
+
+Documentos principales:
+
+```text
+00_planificacion_mvp_sistema_plan_marketing.md
+01_alcance_funcional_mvp.md
+02_flujo_plan_marketing.md
+03_agentes_y_responsabilidades.md
+04_skills_y_uso.md
+05_gates_y_validaciones.md
+06_sistema_cambios_versionado.md
+07_estructura_repositorio.md
+08_arquitectura_tecnica_inicial.md
+09_criterios_de_hecho.md
+10_decisiones_finales_pre_codigo.md
+```
+
+Antes de modificar la arquitectura, se debe revisar esta documentación.
+
+---
+
+---
+
+## 22. Deuda técnica y mejoras identificadas
+
+Durante la auditoría de la base funcional, se han identificado los siguientes puntos de mejora:
+
+### 22.1 `marketing_profile_resolver.py`
+- **Keyword "bar"**: Actualmente se usa como palabra clave para `b2c_local`, lo que puede generar falsos positivos en términos como "barrera" o "embarque" debido al matching por substring.
+- **Lógica de matching**: Se recomienda migrar de búsqueda por substring (`if kw in text`) a una búsqueda por palabra exacta o expresiones regulares para mayor precisión.
+
+### 22.2 `canales_service.py`
+- **Tablas truncadas**: La tabla resumen de la Fase 06 trunca textos largos usando `...` (ej. `ch['objective'][:30]`). Se debe evaluar permitir el texto completo o mejorar el formato de la tabla para no perder información estratégica.
+
+---
+
+## 23. Próximos pasos recomendados
+- Añadir tests del pipeline completo por perfil.
+- Preparar una prueba con un brief real controlado.
+- Documentar regla: si se modifica markdown_utils.py o project_io.py, ejecutar pruebas y pipeline completo de control.
+- Migrar `system/`, `agents/` y `skills/` a implementación de contenido real (En proceso).
+
+---
+
+## 24. Estado recomendado antes de continuar
+
+Antes de avanzar a la siguiente fase, el repositorio debe cumplir:
+
+- `main.py` raíz eliminado,
+- `src/main.py` como punto de entrada real,
+- `project_template/` portable,
+- `outputs/versions/` y `outputs/audits/` unificados,
+- `projects/` ignorado por Git,
+- proyecto de prueba creado correctamente,
+- documentación alineada con `src/`,
+- y sin datos reales dentro del repositorio base.
+
+---
+
+## 25. Licencia
+
+Licencia pendiente de definir.
+
+Antes de publicar o compartir el repositorio, se debe decidir el tipo de licencia.
+
+---
+
+## 26. Nota de trabajo
+
+Este repositorio debe crecer despacio y con control.
+
+La prioridad no es automatizar rápido, sino construir una base confiable.
+
+Cada nueva función debe responder a una necesidad real del sistema y no a una automatización prematura.
+
