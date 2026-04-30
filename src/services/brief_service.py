@@ -28,6 +28,12 @@ def generate_validated_brief(project_name: str) -> str:
     content = read_markdown_file(context_path)
     data = extract_brief_fields(content)
 
+    def get_val(key, default="No informado"):
+        val = data.get(key, default)
+        if not val or str(val).lower() in ["[recomendado]", "[opcional]", "[condicional]", "[completar]", "none", "n/a", "null"]:
+            return default
+        return val
+
     # 3. Construir el contenido del output formal
     output_content = f"""# 01 - Brief de Negocio Validado
 
@@ -35,15 +41,40 @@ def generate_validated_brief(project_name: str) -> str:
 aprobado_estructuralmente
 
 ## Datos principales
-- **nombre_negocio:** {data.get('nombre_negocio', 'N/A')}
-- **tipo_negocio:** {data.get('tipo_negocio', 'N/A')}
-- **oferta_principal:** {data.get('oferta_principal', 'N/A')}
-- **cliente_objetivo:** {data.get('cliente_objetivo', 'N/A')}
-- **problema_que_resuelve:** {data.get('problema_que_resuelve', 'N/A')}
-- **objetivo_principal:** {data.get('objetivo_principal', 'N/A')}
-- **presupuesto_marketing:** {data.get('presupuesto_marketing', 'Opcional')}
-- **canales_actuales:** {data.get('canales_actuales', 'No informados')}
-- **ubicacion:** {data.get('ubicacion', 'No informada')}
+- **nombre_negocio:** {get_val('nombre_negocio')}
+- **tipo_negocio:** {get_val('tipo_negocio')}
+- **oferta_principal:** {get_val('oferta_principal')}
+- **cliente_objetivo:** {get_val('cliente_objetivo')}
+- **problema_que_resuelve:** {get_val('problema_que_resuelve')}
+- **objetivo_principal:** {get_val('objetivo_principal')}
+- **zona_geografica:** {get_val('zona_geografica')}
+
+## Datos operativos recomendados
+- **presupuesto_marketing:** {get_val('presupuesto_marketing')}
+- **recursos_internos:** {get_val('recursos_internos')}
+- **tiempo_disponible:** {get_val('tiempo_disponible')}
+- **capacidad_operativa:** {get_val('capacidad_operativa')}
+- **canales_actuales:** {get_val('canales_actuales')}
+- **restricciones:** {get_val('restricciones')}
+
+## Datos opcionales de contexto
+- **competidores_conocidos:** {get_val('competidores_conocidos')}
+- **activos_existentes:** {get_val('activos_existentes')}
+- **herramientas_medicion:** {get_val('herramientas_medicion')}
+- **desempeno_pasado:** {get_val('desempeno_pasado')}
+
+## Datos condicionales por modelo
+- **ticket_promedio:** {get_val('ticket_promedio')}
+- **margen_bruto:** {get_val('margen_bruto')}
+- **logistica:** {get_val('logistica')}
+- **ciclo_venta:** {get_val('ciclo_venta')}
+- **decisores_compra:** {get_val('decisores_compra')}
+- **homologacion:** {get_val('homologacion')}
+- **radio_influencia:** {get_val('radio_influencia')}
+- **google_business_profile:** {get_val('google_business_profile')}
+- **modalidad_formativa:** {get_val('modalidad_formativa')}
+- **sistema_reservas:** {get_val('sistema_reservas')}
+- **modelo_recurrencia:** {get_val('modelo_recurrencia')}
 
 ## Campos obligatorios completados
 - nombre_negocio
@@ -52,21 +83,22 @@ aprobado_estructuralmente
 - cliente_objetivo
 - problema_que_resuelve
 - objetivo_principal
+- zona_geografica
+
+## Integridad de Datos
+- **Datos confirmados usados:** Aquellos marcados en las secciones superiores sin el valor "No informado".
+- **Supuestos aplicados:** Se utilizarán rangos prudentes para los campos "No informado" de la sección operativa.
+- **Datos faltantes:** Ver campos marcados como "No informado" en secciones Operativa y Condicional.
+- **Impacto del vacío:** La falta de datos operativos (recursos/tiempo) puede generar planes inalcanzables.
+- **Recomendación de validación:** Se recomienda al cliente completar los campos "No informado" antes de la Fase 08.
 
 ## Hipótesis iniciales
-- Pendiente validar si la oferta principal '{data.get('oferta_principal')}' tiene demanda suficiente en el segmento indicado.
+- Pendiente validar si la oferta principal '{get_val('oferta_principal')}' tiene demanda suficiente en el segmento indicado.
 - Pendiente validar si el cliente objetivo definido es el más adecuado para la oferta.
 - Pendiente contrastar el problema declarado con señales reales del mercado.
 
-## Notas adicionales
-{data.get('notas_adicionales', 'No hay notas adicionales.')}
-
-## Información faltante
-- No falta información obligatoria para iniciar el diagnóstico.
-- La validación estratégica del contenido queda pendiente para la Fase 02.
-
 ## Observaciones
-- Validación de estructura mínima superada.
+- Validación de estructura mínima superada bajo estándar multimodelo v1.2.
 - Este documento no certifica la viabilidad comercial, solo la completitud de la información inicial.
 
 ## Siguiente fase sugerida
