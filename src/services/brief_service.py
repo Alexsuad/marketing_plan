@@ -8,6 +8,11 @@ import os
 from src.validators.brief_validator import validate_brief
 from src.utils.markdown_utils import read_markdown_file, write_markdown_file, extract_brief_fields
 from src.utils.project_io import get_context_path, get_plan_actual_path
+from src.core.data_integrity import (
+    evaluate_integrity, render_integrity_markdown, normalize_value,
+    STATUS_NO_APLICABLE, STATUS_SENSIBLE, STATUS_RESUMIDO
+)
+from src.core.marketing_profile_resolver import resolve_marketing_profile
 
 def generate_validated_brief(project_name: str) -> str:
     """
@@ -24,21 +29,33 @@ def generate_validated_brief(project_name: str) -> str:
     output_dir = get_plan_actual_path(project_name)
     output_file = os.path.join(output_dir, "01_brief_negocio_validado.md")
 
-    # 2. Leer datos del brief
+    # 2. Leer datos del brief y evaluar integridad
     content = read_markdown_file(context_path)
     data = extract_brief_fields(content)
+    
+    profile_data = resolve_marketing_profile(data)
+    profile = profile_data.get("marketing_profile", "estrategia_general_prudente")
+    report = evaluate_integrity(data, profile)
 
     def get_val(key, default="No informado"):
-        val = data.get(key, default)
-        if not val or str(val).lower() in ["[recomendado]", "[opcional]", "[condicional]", "[completar]", "none", "n/a", "null"]:
-            return default
-        return val
+        status = report["fields"].get(key)
+        if status == STATUS_NO_APLICABLE:
+            return "No aplica a este modelo"
+        
+        val = normalize_value(data.get(key))
+        
+        if status == STATUS_SENSIBLE and val:
+            return "[Dato Protegido - Uso Interno]"
+        
+        return val if val else default
 
     # 3. Construir el contenido del output formal
+    integrity_section = render_integrity_markdown(report)
+    
     output_content = f"""# 01 - Brief de Negocio Validado
 
 ## Estado del brief
-aprobado_estructuralmente
+{report['status']}
 
 ## Datos principales
 - **nombre_negocio:** {get_val('nombre_negocio')}
@@ -85,12 +102,7 @@ aprobado_estructuralmente
 - objetivo_principal
 - zona_geografica
 
-## Integridad de Datos
-- **Datos confirmados usados:** Aquellos marcados en las secciones superiores sin el valor "No informado".
-- **Supuestos aplicados:** Se utilizarán rangos prudentes para los campos "No informado" de la sección operativa.
-- **Datos faltantes:** Ver campos marcados como "No informado" en secciones Operativa y Condicional.
-- **Impacto del vacío:** La falta de datos operativos (recursos/tiempo) puede generar planes inalcanzables.
-- **Recomendación de validación:** Se recomienda al cliente completar los campos "No informado" antes de la Fase 08.
+{integrity_section}
 
 ## Hipótesis iniciales
 - Pendiente validar si la oferta principal '{get_val('oferta_principal')}' tiene demanda suficiente en el segmento indicado.
@@ -98,7 +110,8 @@ aprobado_estructuralmente
 - Pendiente contrastar el problema declarado con señales reales del mercado.
 
 ## Observaciones
-- Validación de estructura mínima superada bajo estándar multimodelo v1.2.
+- Validación de integridad técnica v1.6 (Determinista).
+- Perfil detectado: {profile}
 - Este documento no certifica la viabilidad comercial, solo la completitud de la información inicial.
 
 ## Siguiente fase sugerida
