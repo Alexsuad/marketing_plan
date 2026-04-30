@@ -1,5 +1,5 @@
 <!--
-# File: docs/07_estructura_repositorio.md
+# File: docs/00_base_sistema/07_estructura_repositorio.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Documentar la estructura de carpetas y archivos del repositorio.
 # Rol: Documentación técnica.
@@ -17,13 +17,13 @@ Su objetivo es asegurar que el sistema sea reutilizable, limpio y seguro para tr
 Este documento complementa:
 
 ```text
-00_planificacion_mvp_sistema_plan_marketing.md
-01_alcance_funcional_mvp.md
-02_flujo_plan_marketing.md
-03_agentes_y_responsabilidades.md
-04_skills_y_uso.md
-05_gates_y_validaciones.md
-06_sistema_cambios_versionado.md
+docs/00_base_sistema/00_planificacion_mvp_sistema_plan_marketing.md
+docs/00_base_sistema/01_alcance_funcional_mvp.md
+docs/00_base_sistema/02_flujo_plan_marketing.md
+docs/00_base_sistema/03_agentes_y_responsabilidades.md
+docs/00_base_sistema/04_skills_y_uso.md
+docs/00_base_sistema/05_gates_y_validaciones.md
+docs/00_base_sistema/06_sistema_cambios_versionado.md
 ```
 
 ---
@@ -55,17 +55,18 @@ Cada nuevo Plan de Marketing debe crearse en una instancia limpia de proyecto.
 Estructura inicial:
 
 ```text
-marketing_plan_agent_base/
 ├── README.md
 ├── AGENTS.md
-├── docs/
-├── system/
-├── agents/
-├── skills/
-├── src/
-├── tests/
-├── project_template/
-└── projects/
+├── .claude/
+│   └── skills/         # Skills operativas (13 skills)
+├── docs/               # Documentación viva (Base, Estándares, Manual)
+├── system/             # Reglas, gates y workflows
+├── agents/             # Definición de agentes
+├── src/                # Código Python (servicios, core, utils)
+├── tests/              # Suite de pruebas
+├── project_template/   # Plantilla para nuevos proyectos
+├── projects/           # Banco local de proyectos (ignorado)
+└── workspace/          # Taller variable e informes (ignorado)
 ```
 
 En fases posteriores, la carpeta `projects/` podría estar fuera del repositorio base si se quiere separar por completo el motor del sistema y los proyectos generados.
@@ -156,16 +157,9 @@ Estructura inicial:
 
 ```text
 docs/
-├── 00_planificacion_mvp_sistema_plan_marketing.md
-├── 01_alcance_funcional_mvp.md
-├── 02_flujo_plan_marketing.md
-├── 03_agentes_y_responsabilidades.md
-├── 04_skills_y_uso.md
-├── 05_gates_y_validaciones.md
-├── 06_sistema_cambios_versionado.md
-├── 07_estructura_repositorio.md
-├── 08_arquitectura_tecnica_inicial.md
-└── 09_criterios_de_hecho.md
+├── 00_base_sistema/    # Documentos de arquitectura y planificación (00-10)
+├── 01_estandares/      # Estándares funcionales multimodelo
+└── 02_manual_operativo/ # Lecciones aprendidas y manual anti-errores
 ```
 
 La carpeta `docs/` explica cómo funciona el sistema.
@@ -333,40 +327,19 @@ Cada archivo de agente debe incluir:
 
 ---
 
-## 14. Carpeta skills/
+## 14. Carpeta .claude/skills/
 
-Contiene las skills reutilizables del sistema.
+Contiene las skills operativas (agénticas) del sistema. Esta carpeta es parte estructural del repositorio y está bajo control de versiones.
 
-Estructura recomendada:
+Estructura:
 
 ```text
-skills/
+.claude/skills/
 ├── skill_intake_brief/
 │   └── SKILL.md
 ├── skill_diagnostico_marketing/
 │   └── SKILL.md
-├── skill_cliente_objetivo/
-│   └── SKILL.md
-├── skill_propuesta_valor/
-│   └── SKILL.md
-├── skill_analisis_competencia/
-│   └── SKILL.md
-├── skill_matriz_canales/
-│   └── SKILL.md
-├── skill_estrategia_comunicacion/
-│   └── SKILL.md
-├── skill_plan_accion/
-│   └── SKILL.md
-├── skill_presupuesto_marketing/
-│   └── SKILL.md
-├── skill_kpis/
-│   └── SKILL.md
-├── skill_resumen_plan_empresa/
-│   └── SKILL.md
-├── skill_auditoria_coherencia/
-│   └── SKILL.md
-└── skill_change_request/
-    └── SKILL.md
+...
 ```
 
 Cada skill debe tener su propio `SKILL.md`.
@@ -756,27 +729,16 @@ Contenido inicial sugerido:
 __pycache__/
 *.pyc
 
-# Variables y secretos
-.env
-.env.local
-secrets.json
-api_keys.json
-
-# Proyectos generados con datos reales
+# Proyectos y Workspace (Taller)
 projects/
+workspace/
 
-# Logs
-*.log
-logs/
-
-# Archivos temporales
-.tmp/
-temp/
-outputs_temporales/
-
-# Sistema operativo
-.DS_Store
-Thumbs.db
+# Metadata local de IA (excluyendo skills operativas)
+.claude/*
+!.claude/skills/
+!.claude/skills/**
+.gemini/
+.codex
 ```
 
 Si más adelante se quiere versionar proyectos ficticios de ejemplo, se debe crear una carpeta separada:
@@ -854,10 +816,10 @@ Regla:
 
 ```text
 agents/ define roles.
-skills/ define capacidades ejecutables o reutilizables.
+.claude/skills/ define capacidades ejecutables o reutilizables.
 ```
 
-Un agente no debe vivir dentro de `skills/`.
+Un agente no debe vivir dentro de `.claude/skills/`.
 
 Una skill no debe vivir dentro de `agents/`.
 
@@ -933,14 +895,12 @@ La estructura será correcta si:
 
 ---
 
-## 37. Próximo documento recomendado
-
 El siguiente documento debería definir la arquitectura técnica inicial.
 
 Documento sugerido:
 
 ```text
-docs/08_arquitectura_tecnica_inicial.md
+docs/00_base_sistema/08_arquitectura_tecnica_inicial.md
 ```
 
 Ese documento debe detallar:

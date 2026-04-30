@@ -1,5 +1,5 @@
 <!--
-# File: docs/02_flujo_plan_marketing.md
+# File: docs/00_base_sistema/02_flujo_plan_marketing.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Describir el flujo de trabajo del plan de marketing.
 # Rol: Documentación de procesos.
@@ -1062,7 +1062,7 @@ El siguiente documento debería definir los agentes y sus responsabilidades.
 Documento sugerido:
 
 ```text
-docs/03_agentes_y_responsabilidades.md
+docs/00_base_sistema/03_agentes_y_responsabilidades.md
 ```
 
 Ese documento debe detallar para cada agente:

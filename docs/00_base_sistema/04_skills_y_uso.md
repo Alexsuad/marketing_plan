@@ -1,5 +1,5 @@
 <!--
-# File: docs/04_skills_y_uso.md
+# File: docs/00_base_sistema/04_skills_y_uso.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Describir las habilidades (skills) de los agentes y su uso.
 # Rol: Documentación técnica.
@@ -1147,7 +1147,7 @@ Todas las skills deben cumplir estas reglas:
 Cada skill podrá vivir en una carpeta propia:
 
 ```text
-skills/skill_nombre/
+.claude/skills/skill_nombre/
 ├── SKILL.md
 ├── references/
 ├── templates/
@@ -1239,7 +1239,7 @@ El siguiente documento debería definir los gates y validaciones del sistema.
 Documento sugerido:
 
 ```text
-docs/05_gates_y_validaciones.md
+docs/00_base_sistema/05_gates_y_validaciones.md
 ```
 
 Ese documento debe detallar:

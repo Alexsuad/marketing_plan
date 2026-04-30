@@ -178,15 +178,15 @@ marketing_plan_agent_base/
 ├── README.md
 ├── AGENTS.md
 ├── .claude/
-│   └── skills/         # Skills operativas del sistema (13 skills — parte del repo)
-├── docs/
+│   └── skills/         # Skills operativas (13 skills)
+├── docs/               # Documentación viva (Base, Estándares, Manual)
 ├── system/             # Reglas, gates y workflows del sistema
 ├── agents/             # Definición de agentes
-├── skills/             # [DOCUMENTAL] Carpeta legada — ver .claude/skills/ para uso operativo
 ├── src/
 ├── tests/
 ├── project_template/
-├── projects/           # Banco local de proyectos (no se distribuye ni entra en ZIP)
+├── projects/           # Banco local de proyectos (ignorado por Git)
+├── workspace/          # Taller variable (ignorado por Git)
 ├── pyproject.toml
 └── .gitignore
 ```
@@ -228,32 +228,7 @@ analista_metricas
 auditor_plan_marketing
 ```
 
-### 7.4 `.claude/skills/` — Skills operativas del sistema
-
-Las 13 skills operativas del MVP viven en `.claude/skills/`, no en `skills/`.
-
-Esta ubicación es parte estructural del repositorio y está bajo control de versiones
-(a diferencia del resto de `.claude/`, que es metadata local).
-
-```text
-.claude/skills/
-├── skill_intake_brief/SKILL.md
-├── skill_diagnostico_marketing/SKILL.md
-├── skill_cliente_objetivo/SKILL.md
-├── skill_propuesta_valor/SKILL.md
-├── skill_analisis_competencia/SKILL.md
-├── skill_matriz_canales/SKILL.md
-├── skill_estrategia_comunicacion/SKILL.md
-├── skill_plan_accion/SKILL.md
-├── skill_presupuesto_marketing/SKILL.md
-├── skill_kpis/SKILL.md
-├── skill_resumen_plan_empresa/SKILL.md
-├── skill_auditoria_coherencia/SKILL.md
-└── skill_change_request/SKILL.md
-```
-
-La carpeta `skills/` en la raíz del repositorio es documental/legada.
-No crear nuevas skills allí. Toda skill nueva debe ir a `.claude/skills/<nombre>/SKILL.md`.
+Toda skill nueva debe ir a `.claude/skills/<nombre>/SKILL.md`. La arquitectura está diseñada para que el motor operativo sea independiente de los datos de trabajo.
 
 ### 7.5 `src/`
 
@@ -291,14 +266,14 @@ pruebas del pipeline end-to-end con distintos modelos de negocio.
 - No debe contener datos reales de clientes en el repositorio compartido.
 - Cada proyecto nuevo se crea desde `project_template/`, no copiando uno existente.
 
-### 7.8 `docs/archive/`
+### 7.7 `workspace/reports/`
 
-Contiene historiales internos de sesiones de desarrollo.
+Contiene historiales de sesiones, auditorías pasadas e hitos de validación.
 
 **Reglas**:
-- Es historial interno, no parte del sistema distribuible.
+- Es historial de trabajo, no parte del sistema distribuible.
+- Carpeta ignorada por Git (vía `.gitignore`) para mantener el núcleo limpio.
 - No entra en el ZIP de distribución.
-- Se mantiene en git como registro, pero no se comparte con usuarios finales.
 
 ---
 
@@ -757,26 +732,22 @@ En corrección activa (v1.1):
 
 ## 21. Documentación principal
 
-La documentación base está en:
-
-```text
-docs/
-```
+La documentación base está en `docs/00_base_sistema/`.
 
 Documentos principales:
 
 ```text
-00_planificacion_mvp_sistema_plan_marketing.md
-01_alcance_funcional_mvp.md
-02_flujo_plan_marketing.md
-03_agentes_y_responsabilidades.md
-04_skills_y_uso.md
-05_gates_y_validaciones.md
-06_sistema_cambios_versionado.md
-07_estructura_repositorio.md
-08_arquitectura_tecnica_inicial.md
-09_criterios_de_hecho.md
-10_decisiones_finales_pre_codigo.md
+docs/00_base_sistema/00_planificacion_mvp_sistema_plan_marketing.md
+docs/00_base_sistema/01_alcance_funcional_mvp.md
+docs/00_base_sistema/02_flujo_plan_marketing.md
+docs/00_base_sistema/03_agentes_y_responsabilidades.md
+docs/00_base_sistema/04_skills_y_uso.md
+docs/00_base_sistema/05_gates_y_validaciones.md
+docs/00_base_sistema/06_sistema_cambios_versionado.md
+docs/00_base_sistema/07_estructura_repositorio.md
+docs/00_base_sistema/08_arquitectura_tecnica_inicial.md
+docs/00_base_sistema/09_criterios_de_hecho.md
+docs/00_base_sistema/10_decisiones_finales_pre_codigo.md
 ```
 
 Antes de modificar la arquitectura, se debe revisar esta documentación.

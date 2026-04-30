@@ -104,7 +104,7 @@ Los cambios de impacto alto requieren aprobación explícita del usuario antes d
 
 No crear agentes nuevos sin justificar por qué no basta con una skill.
 No crear skills nuevas sin definir entrada, proceso, salida y validación.
-Toda skill nueva debe ir a `.claude/skills/<nombre>/SKILL.md`, no a `skills/`.
+Toda skill nueva debe ir a `.claude/skills/<nombre>/SKILL.md`.
 
 ## 8.1 Modelos de negocio soportados
 

@@ -1,5 +1,5 @@
 <!--
-# File: docs/00_planificacion_mvp_sistema_plan_marketing.md
+# File: docs/00_base_sistema/00_planificacion_mvp_sistema_plan_marketing.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Documentar la planificación general del MVP del sistema de plan de marketing.
 # Rol: Documentación de planificación.
@@ -237,16 +237,10 @@ La estructura general del repositorio base será:
 
 ```text
 marketing_plan_agent_base/
-├── README.md
-├── AGENTS.md
-├── docs/
+├── .claude/
+│   └── skills/         # Skills operativas (13 skills)
 ├── system/
-│   ├── rules/
-│   ├── workflows/
-│   ├── gates/
-│   └── templates/
 ├── agents/
-├── skills/
 ├── src/
 ├── tests/
 └── project_template/
@@ -709,14 +703,12 @@ El Plan de Marketing se considera listo para revisión cuando:
 
 ---
 
-## 23. Próximo paso recomendado
-
 El siguiente documento debería definir con más detalle el alcance funcional del MVP.
 
 Documento sugerido:
 
 ```text
-docs/01_alcance_funcional_mvp.md
+docs/00_base_sistema/01_alcance_funcional_mvp.md
 ```
 
 Ese documento debe transformar esta planificación general en una lista clara de funcionalidades incluidas, funcionalidades excluidas, usuarios esperados, flujo de uso y criterios mínimos de validación.

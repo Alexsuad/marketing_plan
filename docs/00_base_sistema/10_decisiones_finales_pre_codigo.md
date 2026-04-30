@@ -1,4 +1,4 @@
-# File: docs/10_decisiones_finales_pre_codigo.md
+# File: docs/00_base_sistema/10_decisiones_finales_pre_codigo.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Registrar las decisiones técnicas y operativas finales antes de iniciar la programación.
 # Rol: Documento de cierre de la fase de planificación (Definition of Ready).
@@ -12,14 +12,16 @@ Se establece un modelo mixto funcional:
 - **Español** para los nombres y contenidos de los documentos entregables del plan.
 
 **Estructura Base:**
-- `projects/` (Ignorada en Git)
-- `project_template/`
-- `context/`
-- `outputs/`
-- `versions/`
-- `changelog/`
-- `audits/`
-- `logs/`
+- `projects/` (Ignorada en Git - Banco local)
+- `project_template/` (Núcleo Fijo)
+- `workspace/` (Ignorada en Git - Taller variable)
+  - `workspace/reports/`
+  - `workspace/outputs/`
+  - `workspace/inputs/`
+  - `workspace/exports/`
+- `context/` (Dentro de cada proyecto)
+- `outputs/` (Dentro de cada proyecto)
+- `logs/` (Dentro de cada proyecto)
 
 ## 2. Ubicación Definitiva de la Carpeta de Proyectos (`projects/`)
 Para el MVP:
@@ -33,10 +35,10 @@ Para que el sistema permita avanzar hacia el diagnóstico (Gate: `gate_brief_min
 | Campo | Obligatorio | Tipo | Ejemplo | Fase donde se usa | Acción si falta |
 | :--- | :---: | :--- | :--- | :--- | :--- |
 | `nombre_negocio` | Sí | Texto | "Taller Norte" | Brief / Todas | **Bloquea** |
-| `servicio_principal` | Sí | Texto | "Mantenimiento industrial" | Brief / Propuesta | **Bloquea** |
-| `tipo_empresa_servicios` | Sí | Texto | "Servicios logísticos B2B" | Brief / Diagnóstico | **Bloquea** |
-| `problema_que_resuelve` | Sí | Texto | "Falta de control operativo en almacenes" | Brief / Propuesta | **Bloquea** |
+| `tipo_negocio` | Sí | Texto | "Servicios logísticos B2B" | Brief / Diagnóstico | **Bloquea** |
+| `oferta_principal` | Sí | Texto | "Mantenimiento industrial" | Brief / Propuesta | **Bloquea** |
 | `cliente_objetivo` | Sí | Texto | "Pymes industriales" | Cliente / Canales | **Bloquea** |
+| `problema_que_resuelve` | Sí | Texto | "Falta de control operativo en almacenes" | Brief / Propuesta | **Bloquea** |
 | `objetivo_principal` | Sí | Texto | "Captar 5 clientes B2B/mes" | Diagnóstico / KPIs | **Bloquea** |
 | `presupuesto_marketing`| No | Número/Rango | "300 €/mes" | Plan / Presupuesto | Observación |
 

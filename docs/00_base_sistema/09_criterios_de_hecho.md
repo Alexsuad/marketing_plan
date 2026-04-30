@@ -1,5 +1,5 @@
 <!--
-# File: docs/09_criterios_de_hecho.md
+# File: docs/00_base_sistema/09_criterios_de_hecho.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Establecer los criterios de "hecho" (Definition of Done) para las tareas.
 # Rol: Documentación de calidad.
@@ -574,7 +574,7 @@ El repositorio base se considera limpio cuando:
 - `projects/` está excluido de control de versiones cuando contiene datos reales,
 - y las plantillas no están contaminadas con casos concretos.
 
-No está limpio si un proyecto real quedó guardado dentro de `docs/`, `system/`, `agents/`, `skills/` o `project_template/`.
+No está limpio si un proyecto real quedó guardado dentro de `docs/`, `system/`, `agents/`, `.claude/skills/` o `project_template/`.
 
 ---
 

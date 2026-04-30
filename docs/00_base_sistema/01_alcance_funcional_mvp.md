@@ -1,5 +1,5 @@
 <!--
-# File: docs/01_alcance_funcional_mvp.md
+# File: docs/00_base_sistema/01_alcance_funcional_mvp.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Definir el alcance funcional del MVP.
 # Rol: Documentación de requisitos.
@@ -616,7 +616,7 @@ El siguiente documento debería definir el flujo detallado del Plan de Marketing
 Documento sugerido:
 
 ```text
-docs/02_flujo_plan_marketing.md
+docs/00_base_sistema/02_flujo_plan_marketing.md
 ```
 
 Ese documento debe detallar cada fase, sus entradas, salidas, agente responsable, skills utilizadas y gate correspondiente.

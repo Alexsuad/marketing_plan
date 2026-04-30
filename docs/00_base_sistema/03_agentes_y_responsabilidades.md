@@ -1,5 +1,5 @@
 <!--
-# File: docs/03_agentes_y_responsabilidades.md
+# File: docs/00_base_sistema/03_agentes_y_responsabilidades.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Detallar los agentes del sistema y sus responsabilidades.
 # Rol: Documentación de arquitectura de agentes.
@@ -777,7 +777,7 @@ El siguiente documento debería definir las skills del sistema.
 Documento sugerido:
 
 ```text
-docs/04_skills_y_uso.md
+docs/00_base_sistema/04_skills_y_uso.md
 ```
 
 Ese documento debe detallar para cada skill:

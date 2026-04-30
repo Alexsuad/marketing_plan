@@ -1,5 +1,5 @@
 <!--
-# File: docs/05_gates_y_validaciones.md
+# File: docs/00_base_sistema/05_gates_y_validaciones.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Especificar los gates de paso y validaciones entre fases.
 # Rol: Documentación de control de calidad.
@@ -1037,7 +1037,7 @@ El siguiente documento debería definir el sistema de cambios y versionado.
 Documento sugerido:
 
 ```text
-docs/06_sistema_cambios_versionado.md
+docs/00_base_sistema/06_sistema_cambios_versionado.md
 ```
 
 Ese documento debe detallar cómo el sistema manejará un Plan de Marketing vivo:

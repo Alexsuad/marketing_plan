@@ -1,5 +1,5 @@
 <!--
-# File: docs/08_arquitectura_tecnica_inicial.md
+# File: docs/00_base_sistema/08_arquitectura_tecnica_inicial.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Definir la arquitectura técnica inicial del sistema.
 # Rol: Documentación de arquitectura.
@@ -28,14 +28,14 @@ La arquitectura debe permitir:
 Este documento complementa:
 
 ```text
-00_planificacion_mvp_sistema_plan_marketing.md
-01_alcance_funcional_mvp.md
-02_flujo_plan_marketing.md
-03_agentes_y_responsabilidades.md
-04_skills_y_uso.md
-05_gates_y_validaciones.md
-06_sistema_cambios_versionado.md
-07_estructura_repositorio.md
+docs/00_base_sistema/00_planificacion_mvp_sistema_plan_marketing.md
+docs/00_base_sistema/01_alcance_funcional_mvp.md
+docs/00_base_sistema/02_flujo_plan_marketing.md
+docs/00_base_sistema/03_agentes_y_responsabilidades.md
+docs/00_base_sistema/04_skills_y_uso.md
+docs/00_base_sistema/05_gates_y_validaciones.md
+docs/00_base_sistema/06_sistema_cambios_versionado.md
+docs/00_base_sistema/07_estructura_repositorio.md
 ```
 
 ---
@@ -161,14 +161,19 @@ La IA no debe manejar sola:
 La carpeta de código será:
 
 ```text
-src/
-├── __init__.py
-├── main.py
-├── config/
-├── core/
-├── services/
-├── validators/
-└── utils/
+├── .claude/
+│   └── skills/         # Definición agéntica
+├── system/             # Definición documental (Gates, Rules, Workflows)
+├── docs/               # Planificación y estándares (Base, Estándares, Manual)
+├── src/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── config/
+│   ├── core/
+│   ├── services/
+│   ├── validators/
+│   └── utils/
+└── project_template/
 ```
 
 Esta estructura busca separar responsabilidades desde el inicio sin sobrediseñar.
@@ -501,7 +506,7 @@ Debe verificar:
 - `docs/`,
 - `system/`,
 - `agents/`,
-- `skills/`,
+- `.claude/skills/`,
 - `src/`,
 - `tests/`,
 - `project_template/`.
@@ -894,7 +899,7 @@ Meter lógica de negocio en documentos o lógica documental en código sin separ
 
 Control:
 
-Separar `docs/`, `system/`, `agents/`, `skills/`, `src/` y `projects/`.
+Separar `docs/`, `system/`, `agents/`, `.claude/skills/`, `src/`, `projects/` y `workspace/`.
 
 ### 42.3 Contaminación de proyectos
 
@@ -935,7 +940,7 @@ El siguiente documento debería definir los criterios de hecho del sistema.
 Documento sugerido:
 
 ```text
-docs/09_criterios_de_hecho.md
+docs/00_base_sistema/09_criterios_de_hecho.md
 ```
 
 Ese documento debe detallar cuándo se considera completa:

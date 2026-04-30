@@ -1,5 +1,5 @@
 <!--
-# File: docs/06_sistema_cambios_versionado.md
+# File: docs/00_base_sistema/06_sistema_cambios_versionado.md
 # ──────────────────────────────────────────────────────────────────────
 # Propósito: Establecer las reglas para el sistema de cambios y versionado.
 # Rol: Documentación de operaciones.
@@ -740,7 +740,7 @@ El siguiente documento debería definir la estructura del repositorio.
 Documento sugerido:
 
 ```text
-docs/07_estructura_repositorio.md
+docs/00_base_sistema/07_estructura_repositorio.md
 ```
 
 Ese documento debe detallar:
