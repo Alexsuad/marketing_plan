@@ -28,10 +28,15 @@ def generate_canales_output(project_name: str) -> str:
     )
 
     # 2. Recopilar información de contexto y fases previas
-
     brief_path = os.path.join(context_dir, "brief_negocio.md")
     brief_data = extract_brief_fields(read_markdown_file(brief_path)) if os.path.exists(brief_path) else {}
     profile = resolve_marketing_profile(brief_data)
+
+    # Extraer terminología dinámica según el perfil
+    terminology = profile.get("terminology", {})
+    accion_principal = terminology.get("accion_principal", "tomar una decisión de compra o contratación")
+    tipo_oferta = terminology.get("oferta", "oferta")
+    tipo_cliente = terminology.get("cliente", "cliente")
 
     oferta_principal = brief_data.get("oferta_principal", "[No informado]")
     cliente_objetivo = brief_data.get("cliente_objetivo", "[No informado]")
@@ -71,12 +76,12 @@ Esta fase evalúa los canales de comunicación y captación más adecuados para 
 ## Criterios usados para evaluar canales
 - **Tipo de oferta**: '{oferta_principal}'.
 - **Cliente objetivo**: '{cliente_objetivo}'.
-- **Nivel de confianza**: Requerido para contratar la oferta.
+- **Nivel de confianza**: Requerido para **{accion_principal}**.
 - **Ciclo de decisión**: Estimado según la complejidad de la oferta.
 - **Presupuesto y recursos**: Pendientes de validación final.
 
 ## Canales recomendados como prioritarios
-Basado en la naturaleza del servicio, el perfil del cliente y el perfil de marketing ({profile['marketing_profile']}):
+Basado en el tipo de {tipo_oferta}, el perfil del {tipo_cliente} y el perfil de marketing ({profile['marketing_profile']}):
 
 """
 
@@ -125,10 +130,10 @@ Canales de apoyo para visibilidad:
 
     output_content += f"""
 ## Observaciones sobre canales digitales
-Los canales digitales deben actuar como validadores de confianza. Una presencia coherente con el tipo de negocio es necesaria para que el cliente confirme la seriedad del proveedor tras un primer contacto.
+Los canales digitales deben actuar como validadores de confianza. Una presencia coherente con el tipo de negocio es necesaria para que el {tipo_cliente} confirme la seriedad de la marca/negocio tras un primer contacto.
 
 ## Observaciones sobre canales relacionales o presenciales
-Dada la naturaleza de la oferta '{oferta_principal}' y el perfil del cliente '{cliente_objetivo}', los canales prioritarios detectados son los más adecuados para un inicio prudente. La efectividad real queda pendiente de validación.
+Dado el tipo de oferta ({tipo_oferta}) y la oferta principal '{oferta_principal}', junto con el perfil del {tipo_cliente} '{cliente_objetivo}', los canales prioritarios detectados son los más adecuados para un inicio prudente. La efectividad real queda pendiente de validación.
 
 ## Información faltante para decidir mejor
 - Presupuesto real disponible.
