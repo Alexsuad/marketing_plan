@@ -596,6 +596,10 @@ uv sync
   ```bash
   uv run python -m src.main validate-brief --name "Mi Proyecto"
   ```
+- `create-system-copy`: Crea una copia limpia y estéril del sistema base para un nuevo repositorio.
+  ```bash
+  uv run python scripts/create_system_copy.py
+  ```
 
 ### 16.2 Comandos de Generación de Fases (Pipeline)
 
