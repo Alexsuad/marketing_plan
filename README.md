@@ -732,6 +732,10 @@ Backlog post-MVP:
   - Reducir sesgo de servicios consultivos en recomendaciones (ej. "guiones de venta").
   - Fortalecer auditoría semántica entre fases (F02-F10) para detectar contradicciones reales.
   - Validar negocios mixtos reales con outputs completos.
+- **Evolución del Entregable Final**:
+  - Especificación formal del Informe Final del Plan de Marketing consolidado.
+  - Selector de nivel de lectura del informe final (experto, ejecutivo, sencillo).
+  - Generación y exportación automática del informe final consolidado.
 - **Evolución Técnica**:
   - Gate Runner ejecutable (automatización de validación de archivos `.md` de gates).
   - Parser Markdown basado en RegEx para mayor robustez ante variaciones de formato.
@@ -739,7 +743,55 @@ Backlog post-MVP:
 
 ---
 
-## 20. Reglas importantes del repositorio
+## 20. Entregable final del usuario
+
+Esta sección define el producto final que recibe el usuario del sistema tras completar todas las fases de validación.
+
+### 20.1 Qué recibe el usuario
+Un **Informe Final de Plan de Marketing** consolidado. Este documento es la pieza maestra que agrupa todo el conocimiento generado, validado y auditado durante el proceso.
+
+### 20.2 Qué NO recibe el usuario
+Para garantizar la calidad y evitar confusiones, el producto final:
+- No es una colección de archivos internos sueltos.
+- No incluye datos sensibles crudos sin tratar.
+- No contiene supuestos presentados como hechos confirmados.
+
+### 20.3 Estructura mínima del Informe Final
+1. **Portada**
+2. **Resumen Ejecutivo** (F11)
+3. **Descripción del Negocio** (Brief consolidado)
+4. **Diagnóstico de Marketing** (F02)
+5. **Cliente Objetivo y Segmentos** (F03)
+6. **Propuesta de Valor y Posicionamiento** (F04)
+7. **Análisis Competitivo** (F05)
+8. **Canales Recomendados** (F06)
+9. **Estrategia de Comunicación** (F07)
+10. **Plan de Acción 90 Días** (F08)
+11. **Presupuesto Recomendado** (F09)
+12. **KPIs y Medición** (F10)
+13. **Riesgos, Supuestos y Datos Faltantes**
+14. **Integridad de Datos** (Reporte dinámico)
+15. **Próximos Pasos**
+16. **Anexos Técnicos** (Opcional)
+
+### 20.4 Niveles de lectura (Backlog)
+El informe final podrá adaptarse según el perfil de quien lo reciba:
+- **profesional_experto**: Lenguaje técnico preciso, foco en métricas avanzadas y operatividad.
+- **intermedio_ejecutivo**: Foco en resultados, presupuesto y visión estratégica de alto nivel.
+- **sencillo_guiado**: Lenguaje didáctico, explicaciones de conceptos y enfoque en la ejecución paso a paso.
+
+*Nota: El nivel de lectura cambia la narrativa y el detalle pedagógico, pero no altera la estrategia de fondo.*
+
+### 20.5 Transparencia e Integridad
+El informe final debe reflejar el estado real del conocimiento del negocio:
+- **Datos Confirmados**: Basados en el brief validado.
+- **Vacíos e Impactos**: Identificación clara de qué información falta y cómo afecta al plan.
+- **Supuestos Usados**: Declaración explícita de qué se ha asumido para poder avanzar.
+- **Validaciones Críticas**: Qué debe confirmar el usuario antes de ejecutar inversiones reales.
+
+---
+
+## 21. Reglas importantes del repositorio
 
 1. No guardar datos reales en el repositorio base.
 2. No versionar `projects/` si contiene información real.
@@ -754,7 +806,7 @@ Backlog post-MVP:
 
 ---
 
-## 21. Documentación principal
+## 22. Documentación principal
 
 La documentación base está en `docs/00_base_sistema/`.
 
@@ -780,24 +832,24 @@ Antes de modificar la arquitectura, se debe revisar esta documentación.
 
 ---
 
-## 22. Deuda técnica y mejoras identificadas
+## 23. Deuda técnica y mejoras identificadas
 
 Durante la auditoría de la base funcional, se han identificado los siguientes puntos de mejora:
 
-### 22.1 `marketing_profile_resolver.py`
+### 23.1 `marketing_profile_resolver.py`
 - **Keyword "bar"**: Actualmente se usa como palabra clave para `b2c_local`, lo que puede generar falsos positivos en términos como "barrera" o "embarque" debido al matching por substring.
 - **Lógica de matching**: Se recomienda migrar de búsqueda por substring (`if kw in text`) a una búsqueda por palabra exacta o expresiones regulares para mayor precisión.
 
-### 22.2 `canales_service.py`
+### 23.2 `canales_service.py`
 - **Tablas truncadas**: La tabla resumen de la Fase 06 trunca textos largos usando `...` (ej. `ch['objective'][:30]`). Se debe evaluar permitir el texto completo o mejorar el formato de la tabla para no perder información estratégica.
 
 ---
 
-## 23. Arquitectura Lean 5S (Organización del Repositorio)
+## 24. Arquitectura Lean 5S (Organización del Repositorio)
 
 El repositorio sigue un estándar de organización **5S** para separar el código del sistema de los datos variables de trabajo:
 
-### A. Sistema Fijo (Núcleo)
+### 24.1 Sistema Fijo (Núcleo)
 *Versionado y empaquetado en el ZIP base.*
 - `src/`: Lógica de negocio y servicios Python.
 - `system/`: Reglas, gates y workflows multimodelo.
@@ -806,7 +858,7 @@ El repositorio sigue un estándar de organización **5S** para separar el códig
 - `project_template/`: Estructura base para nuevos planes.
 - `docs/00_base_sistema/`, `01_estandares/`, `02_manual_operativo/`: Documentación viva.
 
-### B. Workspace Variable (Taller)
+### 24.2 Workspace Variable (Taller)
 *Ignorado por Git y excluido del ZIP limpio.*
 - `workspace/`: Inputs, borradores, sandbox y reportes de sesión.
 - `workspace/reports/`: Auditorías pasadas e historial de validaciones.
@@ -815,7 +867,7 @@ El repositorio sigue un estándar de organización **5S** para separar el códig
 
 ---
 
-## 24. Estado actual y Validación
+## 25. Estado actual y Validación
 
 El repositorio ha sido estabilizado bajo el estándar multimodelo:
 - **Lógica Multimodelo**: 13 skills operativas, gates documentales como criterios de calidad y validaciones ejecutables mediante validators + data_integrity.py.
@@ -824,13 +876,13 @@ El repositorio ha sido estabilizado bajo el estándar multimodelo:
 
 ---
 
-## 25. Licencia
+## 26. Licencia
 
 Licencia pendiente de definir. Antes de publicar o compartir el repositorio, se debe decidir el tipo de licencia.
 
 ---
 
-## 26. Nota de trabajo
+## 27. Nota de trabajo
 
 Este repositorio debe crecer despacio y con control.
 
