@@ -726,11 +726,16 @@ Logros confirmados:
 - Gates documentales aclarados como criterios de calidad para el MVP.
 
 Backlog post-MVP:
-- Gate Runner ejecutable (automatización de validación MD).
-- Parser Markdown más flexible y robusto.
-- Pruebas reales con negocios genuinamente mixtos.
-- Evaluación semántica profunda entre fases del plan.
-- Mejoras de matching del resolver para casos borde.
+- **Mejoras estratégicas F11/F12**:
+  - Adaptar narrativa del resumen ejecutivo por perfil de negocio.
+  - Adaptar KPIs, riesgos y recomendaciones según el modelo (D2C, Retail, B2B, etc.).
+  - Reducir sesgo de servicios consultivos en recomendaciones (ej. "guiones de venta").
+  - Fortalecer auditoría semántica entre fases (F02-F10) para detectar contradicciones reales.
+  - Validar negocios mixtos reales con outputs completos.
+- **Evolución Técnica**:
+  - Gate Runner ejecutable (automatización de validación de archivos `.md` de gates).
+  - Parser Markdown basado en RegEx para mayor robustez ante variaciones de formato.
+  - Mejoras de matching del resolver para casos borde.
 
 ---
 
