@@ -360,9 +360,10 @@ Campos obligatorios:
 | `cliente_objetivo` | Sí | `Mujeres de 25 a 55 años en zona urbana cercana` | Bloquea |
 | `problema_que_resuelve` | Sí | `Falta de tiempo y confianza para cuidar la piel` | Bloquea |
 | `objetivo_principal` | Sí | `Captar 20 reservas mensuales` | Bloquea |
+| `zona_geografica` | Sí | `Madrid, España` / `Global (Online)` | Bloquea |
 | `presupuesto_marketing` | No | `300 EUR/mes` | Observación |
 
-Si falta un campo obligatorio, el sistema no debe inventarlo.
+Si falta un campo obligatorio, el sistema no debe inventarlo. Los campos recomendados (Sección 2 del brief) no bloquean el inicio, pero su ausencia condicionará la fiabilidad de las fases tácticas posteriores.
 
 Debe marcar el brief como incompleto y pedir la información faltante.
 
@@ -372,35 +373,35 @@ Debe marcar el brief como incompleto y pedir la información faltante.
 
 El MVP define seis agentes iniciales.
 
-### 10.1 `orquestador_plan_marketing`
+### 11.1 `orquestador_plan_marketing`
 
 Coordina el flujo, activa fases, controla estados y asegura que no se salten validaciones.
 
-### 10.2 `investigador_marketing`
+### 11.2 `investigador_marketing`
 
 Analiza contexto, mercado, competencia y datos disponibles.
 
 No decide la estrategia final.
 
-### 10.3 `estratega_marketing`
+### 11.3 `estratega_marketing`
 
 Convierte investigación en decisiones de marketing.
 
 Define cliente prioritario, propuesta de valor, canales y plan de acción.
 
-### 10.4 `redactor_marketing`
+### 11.4 `redactor_marketing`
 
 Convierte decisiones estratégicas en documentos claros y útiles.
 
 No cambia la estrategia sin declarar impacto.
 
-### 10.5 `analista_metricas`
+### 11.5 `analista_metricas`
 
 Define KPIs, medición y criterios de seguimiento.
 
 Evita métricas de vanidad.
 
-### 10.6 `auditor_plan_marketing`
+### 11.6 `auditor_plan_marketing`
 
 Revisa coherencia, riesgos, información faltante y calidad del plan.
 
@@ -710,22 +711,26 @@ El versionado y changelog también se ampliarán en las siguientes fases.
 Estado actual:
 
 ```text
-correccion_lean_multimodelo_en_curso
+mvp_multimodelo_integridad_operativa_estabilizado
 ```
 
 Logros confirmados:
 - Pipeline de 12 fases implementado y funcional.
+- Motor de Integridad de Datos v1.6 implementado en `src/core/data_integrity.py`.
+- Integración del motor en F01 Brief, F11 Resumen Ejecutivo y F12 Auditoría Final.
+- Protección de datos sensibles y separación entre hechos, supuestos y vacíos.
 - Validadores de estructura base y de proyectos operativos.
-- Brief validator con control de campos obligatorios.
-- Generación completa de documentos Markdown (01 a 12).
 - Resolver de perfiles dinámico con 9 modelos de negocio.
 - 13 skills operativas en `.claude/skills/`.
-- Reutilización validada con múltiples modelos de negocio.
+- Tests completos en verde (30 passed).
+- Gates documentales aclarados como criterios de calidad para el MVP.
 
-En corrección activa (v1.1):
-- Resolver: cobertura de briefs D2C y ecommerce premium.
-- Skills: eliminación de sesgo de servicios.
-- Terminología: aplicación por modelo en outputs.
+Backlog post-MVP:
+- Gate Runner ejecutable (automatización de validación MD).
+- Parser Markdown más flexible y robusto.
+- Pruebas reales con negocios genuinamente mixtos.
+- Evaluación semántica profunda entre fases del plan.
+- Mejoras de matching del resolver para casos borde.
 
 ---
 
@@ -808,7 +813,7 @@ El repositorio sigue un estándar de organización **5S** para separar el códig
 ## 24. Estado actual y Validación
 
 El repositorio ha sido estabilizado bajo el estándar multimodelo:
-- **Lógica Multimodelo**: 13 skills y 5 gates operativos.
+- **Lógica Multimodelo**: 13 skills operativas, gates documentales como criterios de calidad y validaciones ejecutables mediante validators + data_integrity.py.
 - **Limpieza 5S**: Estructura organizada y libre de basura técnica.
 - **Punto de Entrada**: `uv run python -m src.main`.
 
