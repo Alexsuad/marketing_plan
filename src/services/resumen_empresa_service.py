@@ -5,10 +5,13 @@
 # ──────────────────────────────────────────────────────────────────────
 
 import os
-import re
 from src.utils.markdown_utils import read_markdown_file, write_markdown_file, extract_brief_fields
 from src.utils.project_io import get_context_path, get_plan_actual_path, ensure_file_exists
 from src.core.marketing_profile_resolver import resolve_marketing_profile
+from src.core.data_integrity import (
+    evaluate_integrity, render_integrity_markdown, normalize_value,
+    STATUS_NO_APLICABLE, STATUS_SENSIBLE
+)
 
 
 def generate_resumen_empresa_output(project_name: str) -> str:
@@ -29,26 +32,41 @@ def generate_resumen_empresa_output(project_name: str) -> str:
     )
 
     # 2. Recopilar información
-
     brief_path = os.path.join(context_dir, "brief_negocio.md")
     brief_data = extract_brief_fields(read_markdown_file(brief_path)) if os.path.exists(brief_path) else {}
-    profile = resolve_marketing_profile(brief_data)
+    
+    # Resolver perfil y evaluar integridad
+    profile_data = resolve_marketing_profile(brief_data)
+    profile_name = profile_data.get("marketing_profile", "estrategia_general_prudente")
+    report = evaluate_integrity(brief_data, profile_name)
 
-    nombre = brief_data.get("nombre_negocio", "[No informado]")
-    tipo = brief_data.get("tipo_negocio", "[No informado]")
-    oferta = brief_data.get("oferta_principal", "[No informado]")
-    cliente = brief_data.get("cliente_objetivo", "[No informado]")
-    problema = brief_data.get("problema_que_resuelve", "[No informado]")
-    presupuesto = brief_data.get("presupuesto_marketing", "[No informado]")
+    def get_val(key, default="No informado"):
+        status = report["fields"].get(key)
+        if status == STATUS_NO_APLICABLE:
+            return "No aplica a este modelo"
+        
+        val = normalize_value(brief_data.get(key))
+        
+        if status == STATUS_SENSIBLE and val:
+            return "[Dato Protegido - Uso Interno]"
+        
+        return val if val else default
+
+    nombre = get_val("nombre_negocio")
+    tipo = get_val("tipo_negocio")
+    oferta = get_val("oferta_principal")
+    cliente = get_val("cliente_objetivo")
+    problema = get_val("problema_que_resuelve")
+    presupuesto = get_val("presupuesto_marketing")
 
     # Construir canales prioritarios desde perfil
     canales_block = ""
-    for i, ch in enumerate(profile["recommended_channel_families"], start=1):
+    for i, ch in enumerate(profile_data.get("recommended_channel_families", []), start=1):
         canales_block += f"{i}. **{ch['name']}**: {ch['objective']}\n"
 
     # Construir tono desde perfil
     tone_parts = []
-    for g in profile["tone_guidelines"]:
+    for g in profile_data.get("tone_guidelines", []):
         parts = g.split(":", 1)
         tone_parts.append(parts[0].strip() if len(parts) >= 1 else g)
     tone_summary = ", ".join(tone_parts[:3])
@@ -63,10 +81,13 @@ def generate_resumen_empresa_output(project_name: str) -> str:
     if os.path.exists(os.path.join(context_dir, "restricciones.md")):
         found_files.append("restricciones.md")
 
+    # Generar sección de integridad
+    integrity_section = render_integrity_markdown(report)
+
     output_content = f"""# 11 - Resumen para Plan de Empresa
 
 ## Estado del resumen
-resumen_marketing_para_plan_empresa_generado_con_informacion_limitada
+{report['status']}
 
 ## Base utilizada
 """
@@ -78,8 +99,8 @@ resumen_marketing_para_plan_empresa_generado_con_informacion_limitada
 Este documento resume únicamente los componentes estratégicos y tácticos del área de marketing desarrollados hasta la fecha. No sustituye ni constituye el Plan de Empresa completo, sino que sirve como input para las secciones de mercado, comercialización y proyecciones de marketing dentro del mismo.
 
 ## Perfil de marketing aplicado
-- **Perfil**: {profile['marketing_profile']}
-- **Motivo**: {profile['profile_reason']}
+- **Perfil**: {profile_name}
+- **Motivo**: {profile_data.get('profile_reason', 'N/A')}
 
 ## Resumen ejecutivo de marketing
 El plan de marketing para **{nombre}** se centra en establecer una base sólida de comunicación y captación para la oferta de **{oferta}**. La estrategia prioriza la validación cualitativa de los mensajes y la construcción de activos mínimos antes de escalar la inversión, asegurando que cada recurso invertido contribuya al aprendizaje sobre el mercado.
@@ -98,7 +119,7 @@ La propuesta de valor se basa en resolver el problema central mediante un enfoqu
 {nombre} busca posicionarse como un referente especializado en **{oferta}**, alejándose de los proveedores generalistas por precio y compitiendo mediante la calidad percibida, la resolución del problema central y el dominio del área de **{tipo}**.
 
 ## Canales de marketing prioritarios
-Se han seleccionado los siguientes canales basándose en el perfil de marketing ({profile['marketing_profile']}):
+Se han seleccionado los siguientes canales basándose en el perfil de marketing ({profile_name}):
 {canales_block}
 ## Estrategia de comunicación
 - **Tono**: {tone_summary}.
@@ -114,6 +135,9 @@ El plan de 90 días se divide en tres etapas críticas:
 ## Presupuesto de marketing inicial
 - **Presupuesto declarado**: {presupuesto}
 - **Distribución inicial**: Se prioriza la inversión en activos mínimos y una reserva de aprendizaje para ajustes tácticos, manteniendo un perfil de gasto prudente.
+
+## Datos Financieros (Uso Interno)
+- **Margen Bruto**: {get_val("margen_bruto")}
 
 ## KPIs principales
 - **Tasa de respuesta cualificada**: Interés real detectado en las interacciones realizadas.
@@ -137,12 +161,8 @@ El plan de 90 días se divide en tres etapas críticas:
 - **Ventas**: Los leads generados por marketing deben ser procesados por un flujo coherente con la propuesta de valor.
 - **Recursos Humanos**: Evaluar si el equipo actual puede ejecutar las acciones de marketing o si requiere apoyo externo.
 
-## Integridad de Datos (v1.2)
-1. **Datos confirmados usados**: {nombre}, {tipo}, {oferta}, {cliente}, {problema}.
-2. **Supuestos aplicados**: Perfil de marketing {profile['marketing_profile']} aplicado como hipótesis base; presupuesto {presupuesto} considerado como rango operativo.
-3. **Datos faltantes**: Zona geográfica (validar consistencia), capacidad operativa detallada y recursos internos específicos.
-4. **Impacto de los vacíos**: La falta de detalle en recursos internos puede retrasar el inicio de la Fase de Preparación.
-5. **Recomendación de validación**: El usuario debe confirmar la disponibilidad real de tiempo y presupuesto antes de activar la Fase de Activación (Día 31).
+## Integridad de Datos
+{integrity_section}
 
 ## Recomendación para la siguiente fase
 12_auditoria_final
