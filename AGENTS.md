@@ -144,3 +144,11 @@ Al cerrar una tarea en este repositorio, reportar:
 - Comandos ejecutados y resultado de validación.
 - Artifacts generados o revisados.
 - Estado final y siguiente paso recomendado.
+
+## 11. Uso de Gates y Validaciones (MVP)
+
+El sistema utiliza un enfoque híbrido para el control de calidad:
+
+- **Gates Documentales (`system/gates/*.md`)**: Los agentes DEBEN usar estos archivos como criterios de revisión y guías de calidad. No deben afirmar que estos archivos se ejecutan automáticamente por el CLI.
+- **Validaciones Ejecutables**: Si se requiere un bloqueo técnico o una confirmación de integridad, los agentes deben apoyarse en los comandos de `src/main.py` (validators) y en el reporte del `Motor de Integridad de Datos`.
+- **Honestidad Técnica**: Al reportar un "Gate pasado", el agente debe especificar si se refiere al cumplimiento de los criterios documentales o a la validación técnica del motor.

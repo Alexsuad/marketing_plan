@@ -471,6 +471,16 @@ Regla importante:
 Documento generado no significa fase aprobada.
 ```
 
+### 13.1 Estado de los gates en el MVP
+
+Para el MVP, el sistema distingue entre criterios de calidad y controles técnicos:
+
+- **Gates Documentales (`system/gates/*.md`)**: Son criterios de calidad, guías de revisión y guardrails operativos para agentes y humanos. No son ejecutados directamente por el CLI.
+- **Validaciones Ejecutables**: El control técnico real que bloquea o condiciona el pipeline reside en:
+  - `src/validators/`: Validaciones de estructura y campos mínimos.
+  - `src/core/data_integrity.py`: Motor determinista que evalúa la integridad y severidad de los datos.
+- **Backlog**: La implementación de un *Gate Runner* que automatice la ejecución de los archivos `.md` queda como mejora post-MVP.
+
 ---
 
 ## 14. Sistema de cambios y versionado

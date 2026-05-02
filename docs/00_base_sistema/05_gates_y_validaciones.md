@@ -1014,6 +1014,23 @@ No se implementarán inicialmente porque pertenecen a funciones fuera del MVP.
 
 ---
 
+## 14. Implementación técnica actual (MVP)
+
+Para el MVP, la arquitectura de validación sigue un modelo de separación entre especificación y ejecución:
+
+### 14.1 Gates como Especificación
+Los archivos en `system/gates/*.md` y este documento actúan como la **Especificación de Calidad**. Definen los criterios que un humano o un agente de IA deben verificar para garantizar la excelencia estratégica.
+
+### 14.2 Ejecución Determinista
+La validación ejecutable (que bloquea o condiciona el pipeline) se implementa mediante:
+- **Validators (`src/validators/`)**: Comprobaciones de estructura de archivos y completitud de campos obligatorios.
+- **Motor de Integridad (`src/core/data_integrity.py`)**: Evaluación lógica de la calidad de los datos, manejo de supuestos y protección de información sensible.
+
+### 14.3 Roadmap: Gate Runner
+La creación de un `gate_runner.py` que parsee y ejecute automáticamente las reglas definidas en los documentos Markdown está planificada como una mejora para versiones post-MVP.
+
+---
+
 ## 18. Criterios de aceptación de gates
 
 Un gate estará bien definido si tiene:
