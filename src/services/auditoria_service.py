@@ -5,13 +5,20 @@
 # ──────────────────────────────────────────────────────────────────────
 
 import os
-from src.utils.markdown_utils import write_markdown_file
+from src.utils.markdown_utils import read_markdown_file, write_markdown_file, extract_brief_fields
 from src.utils.project_io import get_context_path, get_plan_actual_path, ensure_file_exists
+from src.core.marketing_profile_resolver import resolve_marketing_profile
+from src.core.data_integrity import (
+    evaluate_integrity, render_integrity_markdown, normalize_value,
+    STATUS_NO_APLICABLE, STATUS_SENSIBLE, DOC_APROBADO, DOC_OBSERVACIONES,
+    DOC_CONDICIONADO, DOC_BLOQUEADO
+)
+
 
 def generate_auditoria_output(project_name: str) -> str:
     """
     Genera el documento de Auditoría Final (Fase 12).
-    Verifica que la Fase 11 esté completa.
+    Verifica que la Fase 11 esté completa e integra el motor de integridad técnica.
     """
     output_dir = get_plan_actual_path(project_name)
     context_dir = get_context_path(project_name)
@@ -24,8 +31,30 @@ def generate_auditoria_output(project_name: str) -> str:
         "Primero debe ejecutar la Fase 11 (generate-resumen-empresa-output)."
     )
 
-    # 2. Recopilar información de contexto y fases previas
+    # 2. Recopilar información del brief y evaluar integridad
+    brief_path = os.path.join(context_dir, "brief_negocio.md")
+    brief_data = extract_brief_fields(read_markdown_file(brief_path)) if os.path.exists(brief_path) else {}
     
+    profile_data = resolve_marketing_profile(brief_data)
+    profile_name = profile_data.get("marketing_profile", "estrategia_general_prudente")
+    report = evaluate_integrity(brief_data, profile_name)
+
+    def get_val(key, default="No informado"):
+        val = normalize_value(brief_data.get(key))
+        status = report["fields"].get(key)
+        if status == STATUS_SENSIBLE and val:
+            return "[Dato Protegido]"
+        return val if val else default
+
+    # 3. Preparar secciones dinámicas
+    status_map = {
+        DOC_APROBADO: "plan_marketing_inicial_aprobado_estructuralmente",
+        DOC_OBSERVACIONES: "plan_marketing_inicial_aprobado_con_observaciones",
+        DOC_CONDICIONADO: "plan_marketing_inicial_condicionado_por_vacios_operativos",
+        DOC_BLOQUEADO: "plan_marketing_inicial_bloqueado_por_vacios_criticos"
+    }
+    final_status = status_map.get(report["status"], "plan_marketing_en_revision")
+
     phases = [
         ("01", "01_brief_negocio_validado.md", "Brief de negocio"),
         ("02", "02_diagnostico_marketing.md", "Diagnóstico inicial"),
@@ -40,11 +69,18 @@ def generate_auditoria_output(project_name: str) -> str:
         ("11", "11_resumen_para_plan_empresa.md", "Resumen para plan de empresa")
     ]
 
-    # 3. Construir el documento de Fase 12
+    # Evaluación de contradicciones basada en el motor
+    contradicciones_block = "No se han detectado contradicciones estratégicas graves."
+    if report["status"] == DOC_BLOQUEADO:
+        contradicciones_block = "⚠️ SE HAN DETECTADO BLOQUEOS CRÍTICOS: El plan no cuenta con la información base necesaria para ser ejecutable con seguridad."
+    elif report["status"] == DOC_CONDICIONADO:
+        contradicciones_block = "⚠️ SE HAN DETECTADO VACÍOS OPERATIVOS: Existen campos no informados que condicionan la efectividad del plan de acción."
+
+    # 4. Construir el documento de Fase 12
     output_content = f"""# 12 - Auditoría Final del Plan de Marketing
 
 ## Estado de la auditoría
-auditoria_final_generada_con_informacion_limitada
+{final_status}
 
 ## Base auditada
 """
@@ -54,7 +90,7 @@ auditoria_final_generada_con_informacion_limitada
     if os.path.exists(os.path.join(context_dir, "restricciones.md")):
         output_content += "- restricciones.md\n"
 
-    output_content += """
+    output_content += f"""
 ## Alcance de esta auditoría
 Esta auditoría revisa la coherencia documental y estratégica de todas las piezas del plan de marketing generadas. Su propósito es asegurar que existe una trazabilidad lógica desde el brief inicial hasta el resumen ejecutivo. No valida la respuesta real del mercado, la exactitud de los datos competitivos externos ni garantiza resultados comerciales.
 
@@ -69,47 +105,31 @@ Esta auditoría revisa la coherencia documental y estratégica de todas las piez
         obs = "Completado" if exists else "Pendiente de generación"
         output_content += f"| {phase_id} | {label} | {status} | {obs} |\n"
 
-    output_content += """
+    output_content += f"""
 ## Coherencia entre brief, cliente y propuesta
-- **Servicio y Cliente**: Existe una conexión documental entre el servicio declarado y el cliente objetivo descrito en las fases previas. Esta conexión debe validarse con evidencia real del mercado.
-- **Problema y Propuesta**: La propuesta de valor responde al problema declarado en el brief y desarrollado en las fases previas. La intensidad real de ese problema queda pendiente de validación externa.
-- **Consistencia**: El tono del brief se mantiene a lo largo de las definiciones estratégicas de cliente y propuesta.
+- **Oferta/Modelo y Cliente**: Existe una conexión documental entre la oferta declarada ({get_val('oferta_principal')}) y el cliente objetivo descrito. Esta conexión debe validarse con evidencia real del mercado.
+- **Problema y Propuesta**: La propuesta de valor responde al problema declarado ({get_val('problema_que_resuelve')}). La intensidad real de ese problema queda pendiente de validación externa.
+- **Consistencia de Modelo**: El modelo detectado ({profile_name}) guarda coherencia con las definiciones estratégicas de cliente y propuesta.
 
 ## Coherencia entre propuesta, canales y comunicación
-- **Canales**: Los canales priorizados en la matriz de canales son coherentes con la información disponible, aunque su efectividad real queda pendiente de validación.
-- **Comunicación**: Los mensajes centrales y pilares mantienen coherencia con la propuesta de valor y el tono definido en la estrategia de comunicación.
-- **Estrategia**: Se observa una transición fluida desde la definición de valor hasta el plan de comunicación, sin saltos a ejecución de canales de masa no justificados.
+- **Canales**: Los canales priorizados son coherentes con el perfil {profile_name}, aunque su efectividad real queda pendiente de validación.
+- **Comunicación**: Los mensajes centrales mantienen coherencia con la propuesta de valor y el tono definido en la estrategia.
+- **Estrategia**: Se observa una transición fluida desde la definición de valor hasta el plan de comunicación.
 
 ## Coherencia entre plan de acción, presupuesto y KPIs
-- **Plan de Acción**: Las etapas definidas (ej. Preparación, Activación, Aprendizaje) son razonables para un ciclo inicial de validación.
-- **Presupuesto**: Se ha tratado con prudencia, priorizando activos reutilizables y aprendizaje sobre el gasto publicitario agresivo.
-- **KPIs**: Los indicadores se centran en señales de interés real y no en métricas de vanidad, lo cual es coherente con un enfoque inicial de validación prudente.
+- **Plan de Acción**: Las etapas definidas son razonables para un ciclo inicial de validación basado en el modelo {profile_name}.
+- **Presupuesto**: El presupuesto ({get_val('presupuesto_marketing')}) se ha tratado con prudencia estratégica.
+- **KPIs**: Los indicadores se centran en señales de interés real y no en métricas de vanidad.
 
 ## Supuestos principales detectados
-- El cliente objetivo prioriza la resolución del problema técnico sobre el precio.
+- El cliente objetivo realmente identifica '{get_val('problema_que_resuelve')}' como una prioridad relevante.
 - Los canales prioritarios permiten el acceso al cliente objetivo sin bloqueos imprevistos.
-- La capacidad operativa interna permite absorber la demanda generada.
-
-## Información crítica faltante
-- **Competencia Real**: Datos precisos de ofertas y precios de competidores directos en el territorio actual.
-- **Casos de Éxito**: Evidencia documentada que acelere la confianza del cliente en el servicio.
-- **Línea Base**: Datos históricos para comparar el rendimiento de los nuevos KPIs.
-- **Recursos Humanos**: Definición de quién ejecutará cada tarea del plan de acción.
-
-## Riesgos principales del plan
-- **Falta de evidencia previa**: Puede alargar el ciclo de venta al inicio.
-- **Dependencia de canales manuales**: Requiere alta disciplina de ejecución y tiempo del equipo.
-- **Propuesta preliminar**: Riesgo de desajuste menor si el cliente demanda funcionalidades no previstas.
-- **Presupuesto limitado**: Restringe la capacidad de prueba y error en múltiples canales simultáneos.
-
-## Señales positivas del plan
-- **Trazabilidad**: Cada decisión está fundamentada en información de las fases previas.
-- **Prudencia Financiera**: No se asumen riesgos económicos elevados antes de validar la señal del mercado.
-- **Foco en el Cliente**: La comunicación no es egocéntrica, sino centrada en resolver un problema.
-- **KPIs de Calidad**: Medir el aprendizaje asegura que el plan mejore con el tiempo.
+- La capacidad operativa interna ({get_val('capacidad_operativa')}) permite absorber la demanda generada.
 
 ## Errores o contradicciones detectadas
-No se han detectado contradicciones estratégicas graves. El plan mantiene una línea coherente de principio a fin. Se han corregido pequeños errores de redacción detectados durante el proceso de revisión de la Fase 11.
+{contradicciones_block}
+
+{render_integrity_markdown(report)}
 
 ## Recomendaciones antes de usar el plan
 - Realizar un sondeo de precios con 3 competidores para ajustar la propuesta económica.
@@ -118,7 +138,7 @@ No se han detectado contradicciones estratégicas graves. El plan mantiene una l
 - Establecer el presupuesto de marketing como una partida separada y bloqueada en finanzas.
 
 ## Estado final recomendado del plan
-plan_marketing_inicial_aprobado_con_observaciones
+{final_status}
 
 ## Próximos pasos sugeridos
 1. Presentación del resumen ejecutivo (Fase 11) a la dirección para validación de recursos.
@@ -127,7 +147,6 @@ plan_marketing_inicial_aprobado_con_observaciones
 """
 
     output_file = os.path.join(output_dir, "12_auditoria_final.md")
-    
     write_markdown_file(output_file, output_content)
         
     return output_file
