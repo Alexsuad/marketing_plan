@@ -734,12 +734,12 @@ Backlog post-MVP:
   - Validar negocios mixtos reales con outputs completos.
 - **Evolución del Entregable Final**:
   - Implementación del **Pre-informe de Validación** (Checkpoint estratégico).
-  - Especificación formal del Informe Final del Plan de Marketing consolidado.
+  - Implementación del generador del Informe Final del Plan de Marketing consolidado.
   - Selector de nivel de lectura del informe final (experto, ejecutivo, sencillo).
   - Generación y exportación automática del informe final consolidado.
 - **Evolución Técnica**:
   - Gate Runner ejecutable (automatización de validación de archivos `.md` de gates).
-  - Parser Markdown basado en RegEx para mayor robustez ante variaciones de formato.
+  - Parser Markdown más robusto ante variaciones de formato.
   - Mejoras de matching del resolver para casos borde.
 
 ---
