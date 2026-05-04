@@ -733,6 +733,7 @@ Backlog post-MVP:
   - Fortalecer auditoría semántica entre fases (F02-F10) para detectar contradicciones reales.
   - Validar negocios mixtos reales con outputs completos.
 - **Evolución del Entregable Final**:
+  - Implementación del **Pre-informe de Validación** (Checkpoint estratégico).
   - Especificación formal del Informe Final del Plan de Marketing consolidado.
   - Selector de nivel de lectura del informe final (experto, ejecutivo, sencillo).
   - Generación y exportación automática del informe final consolidado.
@@ -747,47 +748,19 @@ Backlog post-MVP:
 
 Esta sección define el producto final que recibe el usuario del sistema tras completar todas las fases de validación.
 
-### 20.1 Qué recibe el usuario
-Un **Informe Final de Plan de Marketing** consolidado. Este documento es la pieza maestra que agrupa todo el conocimiento generado, validado y auditado durante el proceso.
+### 20.1 Definición y Alcance
+El producto final es un **Informe Final de Plan de Marketing** consolidado que agrupa el conocimiento estratégico generado y validado.
 
-### 20.2 Qué NO recibe el usuario
-Para garantizar la calidad y evitar confusiones, el producto final:
-- No es una colección de archivos internos sueltos.
-- No incluye datos sensibles crudos sin tratar.
-- No contiene supuestos presentados como hechos confirmados.
+Para asegurar la calidad profesional de este entregable, el sistema sigue el:
+👉 [Estándar Profesional del Informe Final](docs/01_estandares/estandar_entregable_final_plan_marketing.md)
 
-### 20.3 Estructura mínima del Informe Final
-1. **Portada**
-2. **Resumen Ejecutivo** (F11)
-3. **Descripción del Negocio** (Brief consolidado)
-4. **Diagnóstico de Marketing** (F02)
-5. **Cliente Objetivo y Segmentos** (F03)
-6. **Propuesta de Valor y Posicionamiento** (F04)
-7. **Análisis Competitivo** (F05)
-8. **Canales Recomendados** (F06)
-9. **Estrategia de Comunicación** (F07)
-10. **Plan de Acción 90 Días** (F08)
-11. **Presupuesto Recomendado** (F09)
-12. **KPIs y Medición** (F10)
-13. **Riesgos, Supuestos y Datos Faltantes**
-14. **Integridad de Datos** (Reporte dinámico)
-15. **Próximos Pasos**
-16. **Anexos Técnicos** (Opcional)
+### 20.2 Qué recibe el usuario
+- Un documento único consolidado y coherente.
+- Un análisis adaptado a su **nivel de lectura** (experto, ejecutivo o sencillo).
+- Un reporte de **Integridad de Datos** que garantiza transparencia sobre vacíos y supuestos.
 
-### 20.4 Niveles de lectura (Backlog)
-El informe final podrá adaptarse según el perfil de quien lo reciba:
-- **profesional_experto**: Lenguaje técnico preciso, foco en métricas avanzadas y operatividad.
-- **intermedio_ejecutivo**: Foco en resultados, presupuesto y visión estratégica de alto nivel.
-- **sencillo_guiado**: Lenguaje didáctico, explicaciones de conceptos y enfoque en la ejecución paso a paso.
-
-*Nota: El nivel de lectura cambia la narrativa y el detalle pedagógico, pero no altera la estrategia de fondo.*
-
-### 20.5 Transparencia e Integridad
-El informe final debe reflejar el estado real del conocimiento del negocio:
-- **Datos Confirmados**: Basados en el brief validado.
-- **Vacíos e Impactos**: Identificación clara de qué información falta y cómo afecta al plan.
-- **Supuestos Usados**: Declaración explícita de qué se ha asumido para poder avanzar.
-- **Validaciones Críticas**: Qué debe confirmar el usuario antes de ejecutar inversiones reales.
+### 20.3 Checkpoint: Pre-informe de Validación
+Antes de la entrega definitiva, el sistema genera un **Pre-informe de Validación** para confirmar con el usuario que la base estratégica (negocio, cliente, canales y presupuesto) es correcta antes de proceder a la redacción final.
 
 ---
 
