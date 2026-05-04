@@ -29,7 +29,7 @@ Para construir el informe, el generador requerirá:
 5. **Configuración del Proyecto**: Metadatos del proyecto (`project_config.json`).
 
 ## 5. Salidas del Generador
-El sistema producirá los siguientes archivos:
+El generador deberá producir los siguientes archivos:
 - `informe_final_plan_marketing.md`: Fuente auditable y base de generación.
 - `informe_final_plan_marketing.docx`: Formato profesional editable.
 - `informe_final_plan_marketing.pdf` (Opcional): Formato de lectura final.
@@ -41,7 +41,7 @@ Los entregables se organizarán dentro de la instancia del proyecto:
 - `projects/<nombre_proyecto>/outputs/validation/`: Contendrá el Pre-informe de validación y registros de aprobación.
 
 ## 7. Flujo Recomendado
-El proceso de generación seguirá estos pasos:
+El proceso de generación deberá seguir estos pasos:
 1. **Validación Previa**: Verificar que el brief esté completo y que existan las fases mínimas necesarias.
 2. **Generación de Pre-informe**: Crear un resumen ejecutivo de validación en `outputs/validation/`.
 3. **Punto de Control**: Esperar aprobación o corrección del usuario sobre la base estratégica y el nivel de lectura.
@@ -67,17 +67,17 @@ Se propone la siguiente estructura de componentes:
 - **Estandarización**: Todos los informes finales deben seguir la misma estructura de nombres y metadatos.
 
 ## 10. Relación con Google Docs
-- Google Docs **no es la fuente primaria**. El sistema genera archivos locales primero.
+- Google Docs **no es la fuente primaria**. El generador deberá crear archivos locales primero.
 - La integración con la nube es un destino opcional post-MVP.
 - Se puede implementar una exportación a Google Docs subiendo el archivo DOCX generado, pero nunca dependiendo de él para la lógica de construcción.
 
 ## 11. Criterios de Hecho (DoD)
-Un informe se considera finalizado cuando:
-- Se genera en la carpeta `outputs/final/`.
-- Incluye las 17 secciones obligatorias del estándar de contenido.
-- El tono y profundidad respetan el `nivel_de_lectura` seleccionado.
-- No contiene datos sensibles crudos (anonimización aplicada).
-- Incluye la sección de **Integridad de Datos** con el estado de validación.
-- Los supuestos están claramente marcados y no se presentan como hechos.
-- Pasa las pruebas automatizadas de generación.
-- No deja archivos de basura técnica en el proyecto.
+Un informe se considerará finalizado cuando:
+- Se haya generado en la carpeta `outputs/final/`.
+- Incluya las 17 secciones obligatorias del estándar de contenido.
+- El tono y profundidad respeten el `nivel_de_lectura` seleccionado.
+- No contenga datos sensibles crudos (anonimización aplicada).
+- Incluya la sección de **Integridad de Datos** con el estado de validación.
+- Los supuestos estén claramente marcados y no se presenten como hechos.
+- Pase las pruebas automatizadas de generación.
+- No deje archivos de basura técnica en el proyecto.
