@@ -92,7 +92,7 @@ def generate_auditoria_output(project_name: str) -> str:
 
     output_content += f"""
 ## Alcance de esta auditoría
-Esta auditoría revisa la coherencia documental y estratégica de todas las piezas del plan de marketing generadas. Su propósito es asegurar que existe una trazabilidad lógica desde el brief inicial hasta el resumen ejecutivo. No valida la respuesta real del mercado, la exactitud de los datos competitivos externos ni garantiza resultados comerciales.
+Esta auditoría revisa la coherencia documental y estratégica de todas las piezas del plan de marketing generadas. Su propósito es asegurar que existe una trazabilidad lógica desde el brief inicial hasta el insumo de síntesis interna. No valida la respuesta real del mercado, la exactitud de los datos competitivos externos ni garantiza resultados comerciales.
 
 ## Verificación de completitud documental
 | Fase | Documento | Estado | Observación |
@@ -141,7 +141,7 @@ Esta auditoría revisa la coherencia documental y estratégica de todas las piez
 {final_status}
 
 ## Próximos pasos sugeridos
-1. Presentación del resumen ejecutivo (Fase 11) a la dirección para validación de recursos.
+1. Presentación del insumo de síntesis interna (Fase 11) para validación de recursos estratégicos.
 2. Inicio de la Fase de Preparación (Días 1-30 del Plan de Acción).
 3. Recopilación de las primeras objeciones cualitativas para retroalimentar la propuesta de valor.
 """

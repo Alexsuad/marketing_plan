@@ -83,7 +83,7 @@ def main():
     parser_gen_kpi.add_argument("--name", required=True, help="Nombre del proyecto para generar los KPIs")
 
     # Comando: generate-resumen-empresa-output
-    parser_gen_res = subparsers.add_parser("generate-resumen-empresa-output", help="Genera el resumen ejecutivo para plan de empresa")
+    parser_gen_res = subparsers.add_parser("generate-resumen-empresa-output", help="Genera el insumo de síntesis interna para el plan de empresa")
     parser_gen_res.add_argument("--name", required=True, help="Nombre del proyecto para generar el resumen")
 
     # Comando: generate-auditoria-output
@@ -225,7 +225,7 @@ def main():
             sys.exit(1)
 
     elif args.command == "generate-resumen-empresa-output":
-        print(f"Generando resumen para plan de empresa para: {args.name}...")
+        print(f"Generando insumo de síntesis interna para plan de empresa para: {args.name}...")
         try:
             path = generate_resumen_empresa_output(args.name)
             print(f"✅ Resumen generado en: {path}")

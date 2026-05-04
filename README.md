@@ -89,7 +89,7 @@ El flujo previsto es:
 08_plan_accion_90_dias
 09_presupuesto_marketing
 10_kpis_y_medicion
-11_resumen_para_plan_empresa
+11_insumo_sintesis_plan_empresa
 12_auditoria_final
 ```
 
@@ -624,7 +624,7 @@ uv sync
 - `generate-plan-accion-output`: Genera el documento del plan de acción 90 días (Fase 08).
 - `generate-presupuesto-output`: Genera el documento de presupuesto de marketing (Fase 09).
 - `generate-kpis-output`: Genera el documento de KPIs y medición inicial (Fase 10).
-- `generate-resumen-empresa-output`: Genera el resumen ejecutivo para plan de empresa (Fase 11).
+- `generate-resumen-empresa-output`: Genera el insumo de síntesis interna para el plan de empresa (Fase 11).
 - `generate-auditoria-output`: Genera la auditoría final del plan de marketing (Fase 12).
 
 ### 16.3 Ejemplo de ejecución del pipeline completo
@@ -717,7 +717,7 @@ mvp_multimodelo_integridad_operativa_estabilizado
 Logros confirmados:
 - Pipeline de 12 fases implementado y funcional.
 - Motor de Integridad de Datos v1.6 implementado en `src/core/data_integrity.py`.
-- Integración del motor en F01 Brief, F11 Resumen Ejecutivo y F12 Auditoría Final.
+- Integración del motor en F01 Brief, F11 Síntesis Interna y F12 Auditoría Final.
 - Protección de datos sensibles y separación entre hechos, supuestos y vacíos.
 - Validadores de estructura base y de proyectos operativos.
 - Resolver de perfiles dinámico con 9 modelos de negocio.
@@ -727,7 +727,7 @@ Logros confirmados:
 
 Backlog post-MVP:
 - **Mejoras estratégicas F11/F12**:
-  - Adaptar narrativa del resumen ejecutivo por perfil de negocio.
+  - Adaptar narrativa de la síntesis interna (F11) por perfil de negocio.
   - Adaptar KPIs, riesgos y recomendaciones según el modelo (D2C, Retail, B2B, etc.).
   - Reducir sesgo de servicios consultivos en recomendaciones (ej. "guiones de venta").
   - Fortalecer auditoría semántica entre fases (F02-F10) para detectar contradicciones reales.

@@ -85,7 +85,7 @@ Los siguientes errores impiden el avance automático y requieren intervención h
 | :--- | :--- | :--- | :--- | :--- |
 | **skill_auditoria_estrategica** | Validar la coherencia lógica del plan. | Diagnóstico, Propuesta. | Paso a canales. | `gate_estrategia_validada` |
 | **skill_auditoria_operativa** | Asegurar que las tareas son realizables. | Plan de acción. | Finalización del plan. | `gate_accion_operativa` |
-| **skill_auditoria_financiera** | Validar coherencia Presupuesto vs KPIs. | Presupuesto, KPIs. | Resumen ejecutivo. | `gate_finanzas_coherentes` |
+| **skill_auditoria_financiera** | Validar coherencia Presupuesto vs KPIs. | Presupuesto, KPIs. | Insumo de síntesis interna. | `gate_finanzas_coherentes` |
 | **skill_auditoria_multimodelo** | Verificar cumplimiento del estándar. | Todas las fases. | Cualquier fase. | `gate_estandar_cumplido` |
 | **skill_auditoria_entregable** | Revisar tono, ortografía y formato final. | Documento final. | Entrega al usuario. | `gate_dossier_listo` |
 

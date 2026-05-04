@@ -1,6 +1,6 @@
 # File: src/services/resumen_empresa_service.py
 # ──────────────────────────────────────────────────────────────────────
-# Propósito: Generar el resumen ejecutivo de marketing para el plan de empresa.
+# Propósito: Generar el insumo de síntesis interna de marketing para el plan de empresa.
 # Rol: Servicio de síntesis estratégica (Fase 11).
 # ──────────────────────────────────────────────────────────────────────
 
@@ -102,7 +102,7 @@ Este documento resume únicamente los componentes estratégicos y tácticos del 
 - **Perfil**: {profile_name}
 - **Motivo**: {profile_data.get('profile_reason', 'N/A')}
 
-## Resumen ejecutivo de marketing
+## Insumo de síntesis interna de marketing
 El plan de marketing para **{nombre}** se centra en establecer una base sólida de comunicación y captación para la oferta de **{oferta}**. La estrategia prioriza la validación cualitativa de los mensajes y la construcción de activos mínimos antes de escalar la inversión, asegurando que cada recurso invertido contribuya al aprendizaje sobre el mercado.
 
 ## Cliente objetivo y segmento prioritario
