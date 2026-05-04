@@ -764,6 +764,17 @@ Para asegurar la calidad profesional de este entregable, el sistema sigue el:
 ### 20.3 Checkpoint: Pre-informe de Validación
 Antes de la entrega definitiva, el sistema genera un **Pre-informe de Validación** para confirmar con el usuario que la base estratégica (negocio, cliente, canales y presupuesto) es correcta antes de proceder a la redacción final.
 
+### 20.4 Generación Consolidada
+El sistema define una especificación técnica para construir el Informe Final Consolidado de forma local y auditable.
+
+La ruta prevista es:
+- Markdown como fuente principal auditable.
+- DOCX como formato editable profesional.
+- PDF como salida opcional.
+- Google Docs / MCP como integración posterior, no como fuente primaria del MVP.
+
+La implementación del generador queda en backlog post-MVP.
+
 ---
 
 ## 21. Reglas importantes del repositorio
