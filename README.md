@@ -751,6 +751,8 @@ Esta sección define el producto final que recibe el usuario del sistema tras co
 ### 20.1 Definición y Alcance
 El producto final es un **Informe Final de Plan de Marketing** consolidado que agrupa el conocimiento estratégico generado y validado.
 
+**Nota sobre F11 (Resumen de Decisiones):** La Fase 11 no constituye un entregable independiente para el usuario, sino que funciona como un insumo interno de síntesis para el Informe Final.
+
 Para asegurar la calidad profesional de este entregable, el sistema sigue el:
 👉 [Estándar Profesional del Informe Final](docs/01_estandares/estandar_entregable_final_plan_marketing.md)
 

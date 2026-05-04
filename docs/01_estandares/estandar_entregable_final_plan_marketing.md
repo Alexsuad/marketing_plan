@@ -28,6 +28,7 @@ El Informe Final del Plan de Marketing es el producto consolidado del sistema. S
 - ¿Es este resumen una representación fiel de su oferta actual?
 - ¿Tiene los recursos para gestionar los canales propuestos (tiempo/personal)?
 - ¿El rango de inversión propuesto es aceptable para su flujo de caja?
+- ¿Qué nivel de lectura deseas para el informe final: `profesional_experto`, `intermedio_ejecutivo` o `sencillo_guiado`?
 
 **Decisiones Posibles:**
 - ✅ **Aprobar**: Proceder a la generación del informe final.
@@ -62,7 +63,7 @@ El informe adapta su narrativa y profundidad técnica según el selector de nive
 ### 3. Resumen de decisiones principales
 - **Objetivo**: Permitir una toma de decisiones rápida (Elevator Pitch del plan).
 - **Contenido Obligatorio**: Las 3-5 decisiones críticas que el usuario debe validar hoy.
-- **Tabla Obligatoria**: Tabla resumen de Objetivos vs. Inversión vs. Retorno esperado.
+- **Tabla Obligatoria**: Tabla resumen de Objetivos vs. Inversión vs. Resultado esperado / hipótesis de avance.
 
 ### 4. Descripción del negocio
 - **Objetivo**: Garantizar alineación total.
@@ -92,6 +93,9 @@ El informe adapta su narrativa y profundidad técnica según el selector de nive
 ### 9. Canales recomendados
 - **Objetivo**: Definir dónde estar.
 - **Contenido Obligatorio**: Selección justificada de canales (Social, SEO, Offline, etc.).
+- **Tabla Obligatoria**:
+| Canal | Rol | Prioridad | Coste | Esfuerzo | Riesgo | Motivo |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 - **Adaptación por Modelo**: `retail_fisico` prioriza visibilidad local (GMB); `b2b_consultivo` prioriza LinkedIn/Eventos.
 
 ### 10. Estrategia de comunicación
@@ -101,7 +105,9 @@ El informe adapta su narrativa y profundidad técnica según el selector de nive
 ### 11. Plan de acción 90 días
 - **Objetivo**: Guía de ejecución inmediata.
 - **Contenido Obligatorio**: Tareas divididas en 3 meses (Fase 1: Cimentación, Fase 2: Activación, Fase 3: Optimización).
-- **Tabla Obligatoria**: Cronograma detallado de hitos mensuales.
+- **Tabla Obligatoria**:
+| Acción | Responsable | Semana | Canal | Dependencia | Resultado esperado |
+| :--- | :--- | :--- | :--- | :--- | :--- |
 - **Gráfico Opcional**: **Matriz Impacto/Esfuerzo** para priorizar tareas.
 
 ### 12. Presupuesto recomendado
@@ -112,6 +118,9 @@ El informe adapta su narrativa y profundidad técnica según el selector de nive
 ### 13. KPIs y medición
 - **Objetivo**: Control de éxito.
 - **Contenido Obligatorio**: Métricas clave para cada canal y objetivo.
+- **Tabla Obligatoria**:
+| KPI | Qué mide | Meta 30 días | Meta 60 días | Meta 90 días | Fuente de datos |
+| :--- | :--- | :--- | :--- | :--- | :--- |
 - **Gráfico Opcional**: **Dashboard 30/60/90** (Métricas esperadas en el tiempo).
 
 ### 14. Riesgos, supuestos y datos faltantes
